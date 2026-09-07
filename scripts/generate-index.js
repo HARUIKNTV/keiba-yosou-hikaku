@@ -245,7 +245,7 @@ ${adSlot("728 x 90", "ad-banner")}
   </section>
 
   <section>
-    <div class="sec-head"><h2>今後開催予定のレース</h2><span>JRA G1（一部G2・G3は順次追加）</span></div>
+    <div class="sec-head"><h2>今後開催予定のレース</h2><span>JRA G1・G2・G3（主要な重賞）</span></div>
     <p class="sec-note">開催後、順次このカレンダーから各レースの比較ページを追加していきます。日付は公開情報をもとにしていますが、変更される場合はJRA公式サイトでご確認ください。</p>
     <div class="race-list">${upcomingRowsHtml}</div>
   </section>
