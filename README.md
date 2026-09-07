@@ -1,27 +1,29 @@
 # 競馬予想比較
 
-JRAの重賞レースについて、AI予想サイト・専門ブログ・YouTube／note・芸能人企画まで、複数の予想元の◎○▲（本命・対抗・穴）と、公開されていた根拠・見解を横断比較するサイト。
+JRAの重賞レースについて、**終わったレースの結果**と、AI予想サイト・専門ブログ・YouTube／note・芸能人企画などが**事前に公開していた◎○▲（本命・対抗・穴）と根拠**を並べて検証するアーカイブサイト。これから行われるレースの予想を出すサイトではない。
 
 **公開サイト:** https://haruikntv.github.io/keiba-yosou-hikaku/
 
 ## これは何か
 
-[全レース競馬予想](https://deep-yosou-shimbun-haruikintv.vercel.app/)が「自分たちの予想」を出すサイトなのに対し、こちらは**世の中にある予想を集めて並べる**サイト。1レースにつき、複数の予想元がそれぞれ何を◎にして、なぜそう判断したのか、結果どうだったかを1ページにまとめる。
+[全レース競馬予想](https://deep-yosou-shimbun-haruikintv.vercel.app/)が「自分たちの予想」を出すサイトなのに対し、こちらは**世の中にあった予想を集めて、結果と照らし合わせる**サイト。未来のレースの予想・開催予定は掲載しない（「予想サイト」ではなく「検証アーカイブ」という位置づけ）。
+
+トップページはレースごとに1行の要約（グレード・レース名・日付・上位3頭・予想元数）だけを並べた一覧で、クリック（`<details>`要素）すると根拠まで含めた全文がその場で開く。スクロールを増やさずに全レースを見渡せて、開いた分だけ詳細が読める構成。
 
 ## Repo layout
 
-- `manifest.json` — `history`（比較ページを作成済みのレース: name, grade, venue, date, folder, description）と `upcoming`（今後開催予定のレース: name, grade, venue, date。比較ページはまだ無い）。
-- `apps/<date>-<race-slug>/` — レースごとの比較ページ（プレーンなHTML/CSS/JS、ビルド不要）。予想元ごとの◎○▲・根拠・的中結果と、◎の集計チャートを掲載。
+- `manifest.json` — 公開する順番を決める`races`配列（各レースのフォルダパスのみ）。データの実体は持たない。
+- `apps/<date>-<race-slug>/data.json` — レースごとのデータ（レース情報・結果・総括・予想元ごとの◎○▲と根拠）。**これが唯一のデータソース**で、HTMLは持たない。
 - `assets/og-image.svg` — サイト共通のOGP/Twitter Card画像。
-- `scripts/generate-index.js` — `site/index.html`（レースカレンダー：公開済みの比較ページ一覧＋今後の開催予定）、`site/sitemap.xml`、`site/llms.txt`を`manifest.json`から自動生成。CIで毎回実行される。
-- `.github/workflows/deploy-pages.yml` — `apps/*/index.html`をそのままコピーしてGitHub Pagesにデプロイ。
+- `scripts/generate-index.js` — `manifest.json`と各`data.json`から、`site/index.html`（全レースをアコーディオンで並べた一覧）、`site/<race-slug>/index.html`（レースごとの単独ページ、共有・direct link用）、`site/sitemap.xml`、`site/llms.txt`を丸ごと自動生成する。HTMLのテンプレートはこのファイル1つに集約されている。CIで毎回実行される。
+- `.github/workflows/deploy-pages.yml` — `node scripts/generate-index.js`を実行して`site/`をGitHub Pagesにデプロイするだけ。
 
-## 新しいレースの比較ページを追加する手順
+## 新しいレースの検証ページを追加する手順
 
 1. 対象レースの結果と、各予想元（AI予想サイト・専門ブログ・note・YouTube・芸能人企画など）が公開していた◎○▲・根拠をWeb検索で調査する。
-2. `apps/<YYYY-MM-DD>-<race-slug>/index.html` を既存ページ（例: `apps/2026-08-30-niigata-kinen/`）をベースに作成する。予想元ごとの根拠は、確認できたものだけ引用・要約して掲載し、確認できないものは「根拠・見解の詳細記事は確認できず」と正直に書く（存在しない理由を捏造しない）。
-3. `manifest.json`の`history`に新しいエントリを追加し、`upcoming`から該当レースを削除する。
-4. コミット・pushすると、GitHub Actionsが自動でサイトを再ビルド・GitHub Pagesに公開する。
+2. `apps/<YYYY-MM-DD>-<race-slug>/data.json` を既存ファイル（例: `apps/2026-08-30-niigata-kinen/data.json`）と同じ形式で作成する。予想元ごとの根拠は、確認できたものだけ引用・要約して`reason`に入れ、確認できないものは空文字のままにする（表示側が自動で「根拠・見解の詳細記事は確認できず」と正直に出す。存在しない理由を捏造しない）。
+3. `manifest.json`の`races`配列に新しいフォルダパスを追加する（並び順は`generate-index.js`が日付降順に並べ替えるので気にしなくてよい）。
+4. コミット・pushすると、GitHub Actionsが`generate-index.js`を実行してサイト全体（一覧＋新しいレースの単独ページ）を再ビルド・GitHub Pagesに公開する。
 
 ## 広告の設置について
 

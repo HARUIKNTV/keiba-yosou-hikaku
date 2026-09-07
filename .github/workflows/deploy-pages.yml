@@ -24,20 +24,7 @@ jobs:
         with:
           node-version: 20
 
-      - name: Copy each race page into site/
-        run: |
-          mkdir -p site
-          shopt -s nullglob
-          for dir in apps/*/; do
-            name=$(basename "$dir")
-            if [ -f "$dir/index.html" ]; then
-              echo "== Copying race page: $name =="
-              mkdir -p "$GITHUB_WORKSPACE/site/$name"
-              cp -r "$dir"/. "$GITHUB_WORKSPACE/site/$name/"
-            fi
-          done
-
-      - name: Generate index page (race calendar)
+      - name: Generate every race page and the index from manifest.json + data.json
         run: node scripts/generate-index.js
 
       - uses: actions/upload-pages-artifact@v3
