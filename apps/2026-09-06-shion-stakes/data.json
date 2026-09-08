@@ -12,32 +12,32 @@
     { "rank": 3, "num": 9, "name": "ドリームコア", "meta": "1と1/4馬身差・前走オークス2着" }
   ],
   "summary": [
-    "7予想元の◎は<b>⑨ドリームコアと⑥アストリルにそれぞれ2票</b>ずつ集まりましたが、勝ったのは1票しか集めていなかった<b>6番人気④マスターソアラ</b>（血統フェスティバル・bfkeiba）。ドリームコアは3着、アストリルは4着に終わりました。",
-    "2着サムシングスイートを本命にしていたnote予想家（logical_racing）は、内枠・道悪適性を評価しての的中に近い予想でした。少頭数の実力比較と見る向きが多かった一戦で、上位人気馬が総崩れした点が特徴です。"
+    "7予想元の◎は<b>⑨ドリームコアと⑥アストリルにそれぞれ2票</b>ずつ集まり、点数化した合計（◎3点・○2点・▲穴1点）でも両馬が6点で並んでトップでした。しかし勝ったのは1票・3点だけの<b>6番人気④マスターソアラ</b>（血統フェスティバル・bfkeiba）。ドリームコアは3着、アストリルは4着に終わりました。",
+    "2着サムシングスイートは◎1票に加えSIVA AIが対抗（○）評価も出しており、集計では5点と2番目に高い評価でした。少頭数の実力比較と見る向きが多かった一戦で、上位人気馬が総崩れした点が特徴です。"
   ],
-  "tallyNote": "実際の勝ち馬（④マスターソアラ）を◎にしていたのは7予想元中1つ（金色のバー）。",
+  "tallyNote": "◎3点・○2点・▲穴1点で集計。実際の勝ち馬（④マスターソアラ）を◎にしていたのは7予想元中1つのみで、集計点も最下位タイでした。",
   "sourceCount": 7,
   "sourceCountNote": "7予想元",
   "sources": [
-    { "name": "血統フェスティバル（bfkeiba）", "url": "https://bfkeiba.com/shionstakes-2026-yosou/", "badge": "blog", "label": "個人ブログ",
+    { "id": "bfkeiba", "name": "血統フェスティバル（bfkeiba）", "url": "https://bfkeiba.com/shionstakes-2026-yosou/", "badge": "blog", "label": "個人ブログ",
       "honmei": [{ "num": 4, "name": "マスターソアラ" }], "taikou": [], "ana": [],
       "reason": "シスキン産駒でミスプロ系、「母母父が注目血統のロベルト系」という血統構成を評価（過去5年データでロベルト系が活躍する傾向）。前走クイーンC4着について「結果はもちろん内容も光るものがあった」とし、最終追い切りの安定した仕上がりも評価した。" },
-    { "name": "logical_racing（note）", "url": "https://note.com/logical_racing/n/n5db5d37f7ba4", "badge": "blog", "label": "note",
+    { "id": "logical-racing", "name": "logical_racing（note）", "url": "https://note.com/logical_racing/n/n5db5d37f7ba4", "badge": "blog", "label": "note",
       "honmei": [{ "num": 2, "name": "サムシングスイート" }], "taikou": [], "ana": [],
       "reason": "中山2000mでの勝利実績があり急坂・パワーを要する舞台に適性。内枠(2枠2番)により荒れ馬場の影響を受けにくいインから好位を確保できる点、雨による重馬場でのパワー・スタミナ・道悪適性、前々から動ける脚質と粘り強さを評価した。" },
-    { "name": "うましる", "url": "https://umasiru.com/archives/21316", "badge": "blog", "label": "個人ブログ",
+    { "id": "umashiru", "name": "うましる", "url": "https://umasiru.com/archives/21316", "badge": "blog", "label": "個人ブログ",
       "honmei": [{ "num": 9, "name": "ドリームコア" }], "taikou": [], "ana": [],
       "reason": "「上半期のリステッド以上のレースで4着以内に入線した馬が勝ち切りやすい」という過去10年の傾向に合致（クイーンカップ勝ち）。母がG1馬ノームコア、叔母にクロノジェネシスを持つ良血、前走オークス2着の実績、追い切り評価Aを総合的に評価した。" },
-    { "name": "鉄矢の競馬予想", "url": "https://www.keiba-jiku2.net/shion-stakes-2026-yosou/", "badge": "blog", "label": "個人ブログ",
+    { "id": "tetsuya", "name": "鉄矢の競馬予想", "url": "https://www.keiba-jiku2.net/shion-stakes-2026-yosou/", "badge": "blog", "label": "個人ブログ",
       "honmei": [{ "num": 10, "name": "ジッピーチューン" }], "taikou": [], "ana": [],
       "reason": "桜花賞3着の実績を「初めての関西遠征でも能力の高さを示した」と評価。最終追い切りで「強めに追われて力強く伸び、久々でも動ける態勢」と好評価。中山2000mへの距離延長は「中団からロスなく運べれば直線で抜け出せる」と展開面でカバーできると判断した。" },
-    { "name": "SIVA AI（スポニチ／Yahoo!ニュース）", "url": "https://news.yahoo.co.jp/articles/2fa0e20f874bd636aabaa995f03c0d220e8a7fc8", "badge": "ai", "label": "AI予想",
+    { "id": "siva-ai", "name": "SIVA AI（スポニチ／Yahoo!ニュース）", "url": "https://news.yahoo.co.jp/articles/2fa0e20f874bd636aabaa995f03c0d220e8a7fc8", "badge": "ai", "label": "AI予想",
       "honmei": [{ "num": 9, "name": "ドリームコア" }], "taikou": [{ "num": 2, "name": "サムシングスイート" }], "ana": [],
       "reason": "指数89でドリームコアを本命に指名。重賞昇格後最少の11頭立てという少頭数で「紛れは少なく実力通りの一戦」と判断し、「実力でねじ伏せる」とジャッジ。オークスでは首差2着で好位から折り合う競馬ができた実績を評価した一方、右回り中山への不安も指摘した。" },
-    { "name": "うまんちゅ予想・辻三蔵", "url": "https://entameboy.com/concierge-2026-09-06/", "badge": "ent", "label": "芸能人企画",
+    { "id": "umanchu-tsuji", "name": "うまんちゅ予想・辻三蔵", "url": "https://entameboy.com/concierge-2026-09-06/", "badge": "ent", "label": "芸能人企画",
       "honmei": [{ "num": 6, "name": "アストリル" }], "taikou": [], "ana": [],
       "reason": "前走かもめ島特別で中団から追い込んで2着。芝2000mでの成績「2.2.1.0」で複勝率100%を評価。重馬場での上がり3F35秒6も評価でき、距離延長もプラス材料とした。" },
-    { "name": "うまんちゅ予想・栗山求", "url": "https://entameboy.com/concierge-2026-09-06/", "badge": "ent", "label": "芸能人企画",
+    { "id": "umanchu-kuriyama", "name": "うまんちゅ予想・栗山求", "url": "https://entameboy.com/concierge-2026-09-06/", "badge": "ent", "label": "芸能人企画",
       "honmei": [{ "num": 6, "name": "アストリル" }], "taikou": [], "ana": [],
       "reason": "父デクラレーションオブウォー産駒は「小回りや直線の短いコースで持ち味を発揮する傾向」と血統面を評価。中山芝2000mでの好成績、成長力に優れた母系、前走かもめ島特別の道悪2着も好材料とした。" }
   ]

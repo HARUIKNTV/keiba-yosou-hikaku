@@ -12,26 +12,26 @@
     { "rank": 3, "num": null, "name": "ドロップオブライト", "meta": "牝7歳" }
   ],
   "summary": [
-    "◎(本命)は<b>⑥ファンダムと⑫ディールメーカーがそれぞれ2票</b>を集めましたが、実際に勝ったのは<b>10番人気⑧ピコローズ</b>。5予想元中、ピコローズを本命にした予想元はゼロでした。",
+    "◎(本命)は<b>⑥ファンダムが2票</b>、<b>⑫ディールメーカーが1票</b>を集めましたが、実際に勝ったのは<b>10番人気⑧ピコローズ</b>。○▲まで点数化した合計（◎3点・○2点・▲穴1点）でも⑧は「競馬SevenDays」の妙味評価1点のみで、5予想元の中でもっとも評価が低い馬からの激走でした。",
     "唯一「競馬SevenDays」がピコローズを「妙味」として言及しており、本命こそ外したものの候補として名前を挙げていた点は評価できます。ハンデ戦らしく人気馬が総崩れした一戦でした。"
   ],
-  "tallyNote": "実際の勝ち馬（⑧ピコローズ）は◎に挙げた予想元がなかったため、金色のバーはありません。",
+  "tallyNote": "◎3点・○2点・▲穴1点で集計。実際の勝ち馬（⑧ピコローズ）は「競馬SevenDays」の妙味評価1点のみで、集計上も最下位評価でした。",
   "sourceCount": 5,
   "sourceCountNote": "5予想元",
   "sources": [
-    { "name": "与平の競馬予想新聞", "url": "https://yoheikeiba.com/yosou/2026-keisei-hai-autumn-h/", "badge": "blog", "label": "個人ブログ",
+    { "id": "yohei", "name": "与平の競馬予想新聞", "url": "https://yoheikeiba.com/yosou/2026-keisei-hai-autumn-h/", "badge": "blog", "label": "個人ブログ",
       "honmei": [{ "name": "エコロブルーム" }], "taikou": [{ "num": 9, "name": "レザベーション" }, { "num": 12, "name": "ディールメーカー" }], "ana": [{ "name": "メタルスピード（11人気）" }],
       "reason": "◎エコロブルームは、同じ中山芝1600m外回りでニュージーランドT(G2)を勝っている実績と、前走安土城S（L）1着の好調さ、ダイワメジャー産駒としての中山マイル適性を評価。単独トップハンデ58.0kgと約14週の休み明けが不安要因とした。" },
-    { "name": "競馬SevenDays", "url": "https://keibasevendays.com/keisei-hai-autumn-handicap-2026-yosou", "badge": "cmp", "label": "比較サイト",
+    { "id": "sevendays", "name": "競馬SevenDays", "url": "https://keibasevendays.com/keisei-hai-autumn-handicap-2026-yosou", "badge": "cmp", "label": "比較サイト",
       "honmei": [{ "num": 6, "name": "ファンダム" }], "taikou": [{ "num": 12, "name": "ディールメーカー" }], "ana": [{ "num": 9, "name": "レザベーション（単穴）" }, { "num": 8, "name": "ピコローズ（妙味）" }],
       "reason": "◎⑥ファンダムは全頭診断A評価・好走馬順位表1位。前走しらさぎSで1600m4着0.1秒負けの好内容、父キングマンボ系×母父サンデーサイレンス系のニックス血統（複勝率40.0%）を評価。妙味に挙げた⑧ピコローズ（前走1着で下級勝率33.3%）が、結果的に本番を制した。" },
-    { "name": "Winsight（AI見解）", "url": "https://winsight.jp/column/column_page?id=31340", "badge": "ai", "label": "AI予想",
+    { "id": "winsight", "name": "Winsight（AI見解）", "url": "https://winsight.jp/column/column_page?id=31340", "badge": "ai", "label": "AI予想",
       "honmei": [{ "name": "フォルテアンジェロ" }], "taikou": [{ "num": 6, "name": "ファンダム" }, { "num": 9, "name": "レザベーション" }], "ana": [{ "name": "クランフォード（妙味）" }, { "name": "ミナデオロ／ドロップオブライト" }],
       "reason": "本命のフォルテアンジェロは、皐月賞で「出遅れ気味に4角13番手から上り最速33.4秒で0.5秒差5着」という瞬発力を評価（WINDEX基礎能力値28）。妙味のクランフォードは前走関屋記念で「8番人気で逃げて0.9秒差2着」の実績を評価。穴に挙げたドロップオブライトが実際に3着入線した。" },
-    { "name": "ゆたぽんの競馬予想ブログ", "url": "https://hibokorekeiba.com/keiseihai-autumn-handicap2026-predictions/", "badge": "blog", "label": "個人ブログ",
+    { "id": "yutapon", "name": "ゆたぽんの競馬予想ブログ", "url": "https://hibokorekeiba.com/keiseihai-autumn-handicap2026-predictions/", "badge": "blog", "label": "個人ブログ",
       "honmei": [{ "num": 6, "name": "ファンダム" }], "taikou": [], "ana": [],
       "reason": "中山芝1600mで「【2.0.1.0】と一度も崩れておらず」コース適性の高さを評価。前走しらさぎSは「馬群に揉まれて苦しいポジションになったが、直線では狭いスペースからしっかりと脚を伸ばして4着」と着順以上の内容、右回りでの安定性、有利な枠順も評価材料とした。" },
-    { "name": "鉄矢の競馬予想", "url": "https://www.keiba-jiku2.net/keisei-hai-autumn-handicap-2026-yosou/", "badge": "blog", "label": "個人ブログ",
+    { "id": "tetsuya", "name": "鉄矢の競馬予想", "url": "https://www.keiba-jiku2.net/keisei-hai-autumn-handicap-2026-yosou/", "badge": "blog", "label": "個人ブログ",
       "honmei": [{ "num": 12, "name": "ディールメーカー" }], "taikou": [], "ana": [],
       "reason": "54kgという軽ハンデでの好条件、前走ラジオNIKKEI賞で「直線で3着馬を振り切った内容は高く評価できる」点、1800→1600mの距離短縮でスピードを生かせる点、追い切りで「加速と末の伸びが秀逸」だった点を評価。開幕週の高速馬場も先行力を生かせるとした。" }
   ]

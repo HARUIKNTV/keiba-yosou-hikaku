@@ -43,13 +43,18 @@ function fmtInline(arr) {
   return !arr || !arr.length ? '<span class="dash">—</span>' : arr.map(fmtHorse).join("　");
 }
 
+// Match a mark entry ({num, name}) to a result entry. Uses umaban when known;
+// otherwise falls back to matching the horse name (needed for horses whose
+// umaban wasn't confirmed in a given source's article).
+function matchResult(entry, result) {
+  if (!entry) return null;
+  const name = entry.name.replace(/（.*?）/, "").trim();
+  return result.find((r) => (entry.num ? r.num === entry.num : r.name === name)) || null;
+}
+
 function resultPillFor(honmei, result) {
   if (!honmei.length) return '<span class="result-pill miss">対象外</span>';
-  const h = honmei[0];
-  const hName = h.name.replace(/（.*?）/, "").trim();
-  // Match by umaban when known; otherwise fall back to matching the horse name
-  // against the result list (needed for horses whose umaban wasn't confirmed).
-  const match = result.find((r) => (h.num ? r.num === h.num : r.name === hName));
+  const match = matchResult(honmei[0], result);
   if (!match) return '<span class="result-pill miss">着外</span>';
   if (match.rank === 1) return '<span class="result-pill win">1着 ● 的中</span>';
   if (match.rank === 2) return '<span class="result-pill place">2着</span>';
@@ -76,32 +81,41 @@ function renderCallout(summary) {
   </div>`;
 }
 
-function renderTally(data) {
-  const counts = {};
-  const names = {};
-  data.sources.forEach((s) => {
-    s.honmei.forEach((h) => {
-      if (!h.num) return;
-      counts[h.num] = (counts[h.num] || 0) + 1;
-      if (!names[h.num]) names[h.num] = h.num + " " + h.name.replace(/（.*?）/, "").trim();
+// Weights used to turn ◎○▲ mentions into one comparable score per horse.
+const MARK_POINTS = { honmei: 3, taikou: 2, ana: 1 };
+
+// Aggregate every mark (◎ honmei, ○ taikou, ▲ ana) from every source of a
+// race into one per-horse score, so "who got picked, from favorite to
+// longshot" is visible in a single ranking rather than only counting ◎.
+function tallyHorses(sources) {
+  const stats = {};
+  ["honmei", "taikou", "ana"].forEach((field) => {
+    sources.forEach((s) => {
+      (s[field] || []).forEach((h) => {
+        if (!h.num) return; // combined multi-horse text entries without a clean umaban are skipped
+        if (!stats[h.num]) stats[h.num] = { num: h.num, name: h.name.replace(/（.*?）/, "").trim(), honmei: 0, taikou: 0, ana: 0 };
+        stats[h.num][field]++;
+      });
     });
   });
+  return Object.values(stats)
+    .map((h) => ({ ...h, score: h.honmei * MARK_POINTS.honmei + h.taikou * MARK_POINTS.taikou + h.ana * MARK_POINTS.ana }))
+    .sort((a, b) => b.score - a.score);
+}
+
+function renderTally(data) {
+  const horses = tallyHorses(data.sources);
   const winnerNum = data.result[0].num;
-  const maxCount = Math.max(...Object.values(counts));
-  const rows = Object.keys(counts)
-    .sort((a, b) => counts[b] - counts[a])
-    .map((num) => {
-      const c = counts[num];
-      const isWinner = Number(num) === winnerNum;
-      return `<div class="bar-row${isWinner ? " winner" : ""}">
-        <div class="bar-label">${escapeHtml(names[num])}</div>
-        <div class="bar-track"><div class="bar-fill" style="width:${Math.round((c / maxCount) * 100)}%"></div></div>
-        <div class="bar-count">${c}</div>
-      </div>`;
-    })
+  const maxScore = Math.max(...horses.map((h) => h.score));
+  const rows = horses
+    .map((h) => `<div class="bar-row${h.num === winnerNum ? " winner" : ""}">
+        <div class="bar-label">${h.num} ${escapeHtml(h.name)}</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${Math.round((h.score / maxScore) * 100)}%"></div></div>
+        <div class="bar-count">${h.score}<span class="bar-breakdown">◎${h.honmei} ○${h.taikou} ▲${h.ana}</span></div>
+      </div>`)
     .join("");
   return `<section class="tally">
-    <div class="sec-head"><h2>◎（本命）集計</h2><span>${data.sourceCountNote}の単独◎を集計</span></div>
+    <div class="sec-head"><h2>予想印の集計（本命〜穴まで）</h2><span>◎3点・○2点・▲穴1点で採点</span></div>
     <div>${rows}</div>
     <p class="tally-note">${escapeHtml(data.tallyNote || "")}</p>
   </section>`;
@@ -152,17 +166,68 @@ function resultCompactLine(result) {
   return result.map((r) => `${rankLabel[r.rank] || r.rank + "着"} ${r.num ? r.num + " " : ""}${escapeHtml(r.name)}`).join("　／　");
 }
 
-function renderAccordionItem(data) {
-  return `<details class="race-acc">
-    <summary>
-      <span class="acc-grade grade-badge ${data.grade.toLowerCase()}">${data.grade}</span>
-      <span class="acc-name">${escapeHtml(data.name)}<span class="acc-venue">${escapeHtml(data.venueShort)}</span></span>
-      <span class="acc-date">${dateLabel(data.date)}</span>
-      <span class="acc-result">${resultCompactLine(data.result)}</span>
-      <span class="acc-count">${data.sourceCountNote}</span>
-    </summary>
-    <div class="race-body">${renderRaceBody(data)}</div>
-  </details>`;
+function renderRaceLinkRow(data, folder) {
+  const slug = path.basename(folder);
+  return `<a class="race-row" href="./${slug}/">
+    <span class="grade-badge ${data.grade.toLowerCase()}">${data.grade}</span>
+    <span class="row-name">${escapeHtml(data.name)}<span class="row-venue">${escapeHtml(data.venueShort)}</span></span>
+    <span class="row-date">${dateLabel(data.date)}</span>
+    <span class="row-result">${resultCompactLine(data.result)}</span>
+    <span class="row-count">${data.sourceCountNote}</span>
+    <span class="row-arrow">詳細を見る →</span>
+  </a>`;
+}
+
+// ---- source performance ranking: aggregate every source's ◎ pick across every race it appeared in ----
+function computeSourceStats(races) {
+  const bySource = {};
+  races.forEach(({ data }) => {
+    data.sources.forEach((s) => {
+      const id = s.id || s.name; // sources without a stable id (shouldn't happen) fall back to name
+      if (!bySource[id]) bySource[id] = { id, name: s.name, badge: s.badge, races: 0, wins: 0, places: 0 };
+      const entry = bySource[id];
+      entry.name = s.name; // keep the most recent display name
+      entry.races += 1;
+      const honmeiMatch = matchResult(s.honmei[0], data.result);
+      if (honmeiMatch && honmeiMatch.rank === 1) entry.wins += 1;
+      // "placed" = any of ◎○▲ landed in the top 3 (the "honmei to longshot" view)
+      const allMarks = [...s.honmei, ...s.taikou, ...s.ana];
+      const anyPlaced = allMarks.some((m) => {
+        const match = matchResult(m, data.result);
+        return match && match.rank <= 3;
+      });
+      if (anyPlaced) entry.places += 1;
+    });
+  });
+  return Object.values(bySource)
+    .map((s) => ({
+      ...s,
+      winRate: s.races ? s.wins / s.races : 0,
+      placeRate: s.races ? s.places / s.races : 0,
+    }))
+    .sort((a, b) => b.winRate - a.winRate || b.placeRate - a.placeRate || b.races - a.races || a.name.localeCompare(b.name, "ja"));
+}
+
+function renderRankingTable(races) {
+  const stats = computeSourceStats(races);
+  const rows = stats
+    .map((s, i) => `<tr>
+      <td class="rk-pos">${i + 1}</td>
+      <td class="rk-name">${escapeHtml(s.name)}<span class="badge ${s.badge}">${s.races}戦</span></td>
+      <td class="rk-rate">${s.wins}/${s.races}<span class="rk-pct">${Math.round(s.winRate * 100)}%</span></td>
+      <td class="rk-rate">${s.places}/${s.races}<span class="rk-pct">${Math.round(s.placeRate * 100)}%</span></td>
+    </tr>`)
+    .join("");
+  return `<section class="ranking">
+    <div class="sec-head"><h2>予想元別 成績ランキング</h2><span>${races.length}レース分・◎的中率順</span></div>
+    <p class="sec-note">◎的中率＝その予想元が◎にした馬が1着になった割合。印内率＝◎○▲のいずれかが3着以内に入った割合（本命〜穴まで含めた成績）。同じ媒体・企画内の予想家は別の予想元として集計しています。まだ${races.length}レース分しかないため、参加数（戦数）が少ない予想元の数字は参考程度にご覧ください。</p>
+    <div class="table-scroll">
+      <table class="rank-table">
+        <thead><tr><th>順位</th><th>予想元</th><th>◎的中率(1着)</th><th>印内率(3着以内)</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+  </section>`;
 }
 
 // ---- shared CSS (identical for index and standalone race pages) ----
@@ -234,32 +299,42 @@ const SHARED_CSS = `
       linear-gradient(var(--ink),var(--ink)) bottom/100% 1px no-repeat;
   }
 
-  /* accordion list (index page) */
-  .race-list{ display:flex; flex-direction:column; gap:10px; }
-  details.race-acc{
-    background:var(--paper); border:1px solid var(--rule); border-radius:6px; overflow:hidden;
+  /* race link list (index page) */
+  .race-list{ display:flex; flex-direction:column; gap:9px; }
+  a.race-row{
+    background:var(--paper); border:1px solid var(--rule); border-radius:6px;
+    padding:12px 16px; text-decoration:none; color:inherit;
+    display:grid; grid-template-columns:auto 1.4fr auto 2fr auto auto; gap:10px 14px; align-items:center;
   }
-  details.race-acc[open]{ border-color:var(--rule-strong); }
-  details.race-acc summary{
-    position:relative; list-style:none; cursor:pointer; padding:12px 40px 12px 16px;
-    display:grid; grid-template-columns:auto 1.4fr auto 2fr auto; gap:10px 14px; align-items:center;
-  }
-  details.race-acc summary::-webkit-details-marker{ display:none; }
-  details.race-acc summary::after{
-    content:"+"; font-family:"JetBrains Mono",monospace; font-size:16px; color:var(--muted);
-    position:absolute; right:16px; top:50%; transform:translateY(-50%); width:1em; text-align:center;
-  }
-  details.race-acc[open] summary::after{ content:"–"; }
-  .acc-name{ font-weight:700; font-size:14.5px; }
-  .acc-venue{ font-weight:400; font-size:11.5px; color:var(--muted); margin-left:6px; }
-  .acc-date{ font-family:"JetBrains Mono",monospace; font-size:12px; color:var(--muted); white-space:nowrap; font-variant-numeric: tabular-nums; }
-  .acc-result{ font-size:12.5px; color:var(--ink); }
-  .acc-count{ font-family:"JetBrains Mono",monospace; font-size:11px; color:var(--muted); white-space:nowrap; }
+  a.race-row:hover{ border-color:var(--accent); }
+  a.race-row:focus-visible{ outline:2px solid var(--focus); outline-offset:2px; }
+  .row-name{ font-weight:700; font-size:14.5px; }
+  .row-venue{ font-weight:400; font-size:11.5px; color:var(--muted); margin-left:6px; }
+  .row-date{ font-family:"JetBrains Mono",monospace; font-size:12px; color:var(--muted); white-space:nowrap; font-variant-numeric: tabular-nums; }
+  .row-result{ font-size:12.5px; color:var(--ink); }
+  .row-count{ font-family:"JetBrains Mono",monospace; font-size:11px; color:var(--muted); white-space:nowrap; }
+  .row-arrow{ font-size:12px; font-weight:700; color:var(--accent); white-space:nowrap; }
   .grade-badge{ font-family:"JetBrains Mono",monospace; font-weight:700; font-size:12px; padding:3px 9px; border-radius:4px; white-space:nowrap; }
   .grade-badge.g1{ background:var(--g1-bg); color:var(--g1-ink); }
   .grade-badge.g2{ background:var(--g2-bg); color:var(--g2-ink); }
   .grade-badge.g3{ background:var(--g3-bg); color:var(--g3-ink); }
-  .race-body{ padding:6px 18px 18px; border-top:1px solid var(--rule); }
+
+  /* source ranking table (index page) */
+  section.ranking{ margin:34px 0; }
+  .sec-note{ font-size:12px; color:var(--muted); margin:0 0 14px; line-height:1.6; }
+  .table-scroll{ overflow-x:auto; border:1px solid var(--rule); border-radius:6px; }
+  table.rank-table{ border-collapse:collapse; width:100%; min-width:520px; background:var(--paper); }
+  table.rank-table thead th{
+    font-size:11px; font-weight:700; text-align:left; color:var(--muted); text-transform:uppercase; letter-spacing:.04em;
+    padding:9px 12px; border-bottom:2px solid var(--ink); white-space:nowrap;
+  }
+  table.rank-table tbody td{ padding:9px 12px; border-bottom:1px solid var(--rule); font-size:13px; vertical-align:middle; }
+  table.rank-table tbody tr:last-child td{ border-bottom:none; }
+  table.rank-table tbody tr:hover{ background:var(--bg); }
+  .rk-pos{ font-family:"JetBrains Mono",monospace; color:var(--muted); font-variant-numeric: tabular-nums; width:1%; }
+  .rk-name{ font-weight:700; white-space:nowrap; }
+  .rk-rate{ font-family:"JetBrains Mono",monospace; font-variant-numeric: tabular-nums; white-space:nowrap; }
+  .rk-pct{ display:inline-block; margin-left:8px; font-weight:700; color:var(--accent); }
 
   /* race facts / podium / callout / tally / pred cards */
   .race-facts{ display:flex; flex-wrap:wrap; gap:8px 10px; margin:16px 0; }
@@ -280,13 +355,14 @@ const SHARED_CSS = `
   .sec-head{ display:flex; align-items:baseline; gap:10px; justify-content:space-between; border-bottom:2px solid var(--ink); padding-bottom:6px; margin-bottom:14px; }
   .sec-head h2{ font-family:"Noto Serif JP",serif; font-size:17px; margin:0; }
   .sec-head span{ font-family:"JetBrains Mono",monospace; font-size:11px; color:var(--muted); }
-  .bar-row{ display:grid; grid-template-columns:150px 1fr 34px; gap:10px; align-items:center; margin-bottom:9px; }
+  .bar-row{ display:grid; grid-template-columns:130px 1fr auto; gap:10px; align-items:center; margin-bottom:9px; }
   .bar-label{ font-size:12.5px; font-weight:500; text-align:right; }
   .bar-track{ background:var(--accent-soft); border-radius:3px; height:18px; overflow:hidden; }
   .bar-fill{ height:100%; background:var(--rule-strong); border-radius:3px 0 0 3px; }
   .bar-row.winner .bar-fill{ background:var(--gold); }
   .bar-row.winner .bar-label{ color:var(--gold); font-weight:700; }
-  .bar-count{ font-family:"JetBrains Mono",monospace; font-size:12.5px; text-align:right; font-variant-numeric: tabular-nums; }
+  .bar-count{ display:flex; align-items:baseline; gap:8px; font-family:"JetBrains Mono",monospace; font-size:12.5px; font-weight:700; font-variant-numeric: tabular-nums; white-space:nowrap; }
+  .bar-breakdown{ font-size:10.5px; font-weight:400; color:var(--muted); }
   .tally-note{ font-size:11.5px; color:var(--muted); margin-top:6px; }
   .pred-list{ display:flex; flex-direction:column; gap:12px; }
   .pred-card{ background:var(--bg); border:1px solid var(--rule); border-radius:6px; padding:14px 16px; }
@@ -316,23 +392,30 @@ const SHARED_CSS = `
   footer a{ color:var(--accent); }
 
   @media (max-width:640px){
-    details.race-acc summary{ grid-template-columns:1fr auto; grid-template-areas:"grade date" "name name" "result result" "count count"; row-gap:4px; }
-    .acc-grade{ grid-area:grade; justify-self:start; }
-    .acc-date{ grid-area:date; justify-self:end; }
-    .acc-name{ grid-area:name; }
-    .acc-result{ grid-area:result; }
-    .acc-count{ grid-area:count; justify-self:start; }
+    a.race-row{
+      grid-template-columns:1fr auto;
+      grid-template-areas:"grade date" "name name" "result result" "count arrow";
+      row-gap:5px;
+    }
+    .grade-badge{ grid-area:grade; justify-self:start; }
+    .row-date{ grid-area:date; justify-self:end; }
+    .row-name{ grid-area:name; }
+    .row-result{ grid-area:result; }
+    .row-count{ grid-area:count; justify-self:start; }
+    .row-arrow{ grid-area:arrow; justify-self:end; }
     .podium{ grid-template-columns:1fr; }
-    .bar-row{ grid-template-columns:96px 1fr 28px; }
+    .bar-row{ grid-template-columns:96px 1fr auto; }
+    table.rank-table{ min-width:460px; }
   }
 `;
 
 const FONT_LINK = `<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">`;
 
-// ---- index.html: every race as a collapsed-by-default accordion, no upcoming schedule ----
+// ---- index.html: a compact link list of every race (detail lives on each race's own page), plus a source ranking table. No upcoming schedule. ----
 const description = `JRAの重賞レース結果と、AI予想・専門ブログ・YouTube/note・芸能人企画など複数の予想元が事前に出していた◎○▲・根拠を並べて検証するアーカイブ。現在${races.length}レース分を公開中。`;
 
-const raceListHtml = races.map((r) => renderAccordionItem(r.data)).join("\n");
+const raceListHtml = races.map((r) => renderRaceLinkRow(r.data, r.folder)).join("\n");
+const rankingHtml = renderRankingTable(races);
 
 const indexHtml = `<!doctype html>
 <html lang="ja">
@@ -388,13 +471,22 @@ ${adSlot("728 x 90", "ad-banner")}
     <span>公開中 ${races.length}レース</span>
   </div>
   <h1 class="title">${SITE_NAME}</h1>
-  <p class="subtitle">これから出す予想ではなく、終わったレースの結果と、各予想サイトが事前に何を◎にしていたかを並べて検証するアーカイブです。レースをタップすると根拠まで開きます。</p>
+  <p class="subtitle">これから出す予想ではなく、終わったレースの結果と、各予想サイトが事前に何を◎にしていたかを並べて検証するアーカイブです。レースをクリックすると根拠まで見られる詳細ページへ移動します。</p>
   <div class="rule-3"></div>
 
-  <div class="race-list">
-    ${raceListHtml}
-  </div>
+  <section>
+    <div class="sec-head"><h2>レース一覧</h2><span>${races.length}レース公開中</span></div>
+    <div class="race-list">
+      ${raceListHtml}
+    </div>
+  </section>
 </header>
+
+${adSlot("728 x 90", "ad-banner")}
+
+<div class="wrap">
+  ${rankingHtml}
+</div>
 
 ${adSlot("728 x 90", "ad-banner")}
 
