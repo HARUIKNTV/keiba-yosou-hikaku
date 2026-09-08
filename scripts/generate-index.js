@@ -115,7 +115,7 @@ function renderTally(data) {
       </div>`)
     .join("");
   return `<section class="tally">
-    <div class="sec-head"><h2>予想印の集計（本命〜穴まで）</h2><span>◎3点・○2点・▲穴1点で採点</span></div>
+    <div class="sec-head"><div class="sec-title"><span class="sec-icon">📊</span><h2>予想印の集計（本命〜穴まで）</h2></div><span>◎3点・○2点・▲穴1点で採点</span></div>
     <div>${rows}</div>
     <p class="tally-note">${escapeHtml(data.tallyNote || "")}</p>
   </section>`;
@@ -140,7 +140,7 @@ function renderPredCards(data) {
     </div>`;
   }).join("");
   return `<section class="table-sec">
-    <div class="sec-head"><h2>予想元別 印・根拠一覧</h2><span>◎○▲穴と、公開されていた見解・根拠</span></div>
+    <div class="sec-head"><div class="sec-title"><span class="sec-icon">📝</span><h2>予想元別 印・根拠一覧</h2></div><span>◎○▲穴と、公開されていた見解・根拠</span></div>
     <div class="pred-list">${cards}</div>
   </section>`;
 }
@@ -253,7 +253,7 @@ function renderRankingTable(races) {
     </tr>`)
     .join("");
   return `<section class="ranking">
-    <div class="sec-head"><h2>予想元別 成績ランキング</h2><span>${races.length}レース分・◎的中率順</span></div>
+    <div class="sec-head"><div class="sec-title"><span class="sec-icon">🏆</span><h2>予想元別 成績ランキング</h2></div><span>${races.length}レース分・◎的中率順</span></div>
     <p class="sec-note">◎的中率＝その予想元が◎にした馬が1着になった割合。印内率＝◎○▲のいずれかが3着以内に入った割合（本命〜穴まで含めた成績）。同じ媒体・企画内の予想家は別の予想元として集計しています。まだ${races.length}レース分しかないため、参加数（戦数）が少ない予想元の数字は参考程度にご覧ください。</p>
     <div class="table-scroll">
       <table class="rank-table">
@@ -265,37 +265,64 @@ function renderRankingTable(races) {
 }
 
 // ---- shared CSS (identical for index and standalone race pages) ----
+// Visual language: light-gray canvas + white rounded, shadowed cards, bold
+// gothic headlines, colorful circular category icons — modeled after
+// data-portal sites (search bar + colored category cards + card grids)
+// rather than the earlier flat "newspaper" look, per user feedback.
 const SHARED_CSS = `
   :root{
-    --bg:#F1F3EA; --paper:#FBFAF3; --ink:#171D18; --muted:#5B6660;
-    --rule:#CBD1C2; --rule-strong:#9AA593; --accent:#1F4D3A; --accent-soft:#E4EBE1;
-    --gold:#A9791F; --gold-soft:#F1E6C9; --silver:#7A8480; --bronze:#9C6B3E;
-    --miss:#8C8478; --miss-bg:#EDEAE0; --hit-bg:#F1E6C9; --hit-ink:#7A5B10;
-    --place-bg:#DCE9E2; --place-ink:#1F4D3A;
-    --badge-ai-bg:#D8ECEA; --badge-ai-ink:#1E6B62;
-    --badge-blog-bg:#E7DCEC; --badge-blog-ink:#5C3A80;
-    --badge-yt-bg:#F3DCDC; --badge-yt-ink:#8A2E2E;
-    --badge-ent-bg:#EFE3D2; --badge-ent-ink:#6B4A1E;
-    --badge-cmp-bg:#DCE3EC; --badge-cmp-ink:#2E4A6B;
-    --g1-bg:#F3DCDC; --g1-ink:#8A2E2E; --g2-bg:#DCE3EC; --g2-ink:#2E4A6B; --g3-bg:#D8ECEA; --g3-ink:#1E6B62;
-    --focus:#1F4D3A;
+    --bg:#EEF0EA; --paper:#FFFFFF; --ink:#191E17; --muted:#6B7268;
+    --rule:#E1E4DA; --rule-strong:#C7CCBC; --accent:#1F6B4A; --accent-soft:#E1F0E7;
+    --gold:#B8860B; --gold-soft:#FBF0D9; --silver:#7A8480; --bronze:#9C6B3E;
+    --miss:#8C8478; --miss-bg:#EEEEE8; --hit-bg:#FBF0D9; --hit-ink:#8A6206;
+    --place-bg:#E1F0E7; --place-ink:#1F6B4A;
+    --badge-ai-bg:#DFF1EE; --badge-ai-ink:#0E7C6B;
+    --badge-blog-bg:#EEE3F6; --badge-blog-ink:#7141A8;
+    --badge-yt-bg:#FBE1DC; --badge-yt-ink:#C23B1E;
+    --badge-ent-bg:#FDEBD2; --badge-ent-ink:#B0700B;
+    --badge-cmp-bg:#DFE9FA; --badge-cmp-ink:#2159B0;
+    --g1-bg:#FBE1DC; --g1-ink:#C23B1E; --g2-bg:#DFE9FA; --g2-ink:#2159B0; --g3-bg:#DFF1EE; --g3-ink:#0E7C6B;
+    --cat-g1:#D14B32; --cat-g1-soft:#FBE4DE; --cat-g2:#2E6FB0; --cat-g2-soft:#E1EBF7; --cat-g3:#1E8272; --cat-g3-soft:#DCF0EA; --cat-all:#1F6B4A; --cat-all-soft:#E1F0E7;
+    --shadow:0 1px 2px rgba(25,30,23,.06), 0 3px 10px rgba(25,30,23,.06);
+    --shadow-sm:0 1px 3px rgba(25,30,23,.08);
+    --focus:#1F6B4A;
     color-scheme: light;
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
-      --bg:#12160F; --paper:#181D15; --ink:#E9EAE0; --muted:#9CA69A;
-      --rule:#333B2E; --rule-strong:#48533F; --accent:#5FBA92; --accent-soft:#1E2A20;
-      --gold:#E0B85A; --gold-soft:#332A12; --silver:#9AA5A0; --bronze:#C08A54;
-      --miss:#7C8378; --miss-bg:#1E221B; --hit-bg:#332A12; --hit-ink:#E0B85A;
-      --place-bg:#1C2B22; --place-ink:#7FD0A6;
-      --badge-ai-bg:#132824; --badge-ai-ink:#6FCFC2;
-      --badge-blog-bg:#241C2C; --badge-blog-ink:#C6A6E0;
-      --badge-yt-bg:#2C1818; --badge-yt-ink:#E19A9A;
-      --badge-ent-bg:#2B2416; --badge-ent-ink:#D8B57C;
-      --badge-cmp-bg:#1C2530; --badge-cmp-ink:#8FB0DA;
-      --g1-bg:#2C1818; --g1-ink:#E19A9A; --g2-bg:#1C2530; --g2-ink:#8FB0DA; --g3-bg:#132824; --g3-ink:#6FCFC2;
+      --bg:#0E120C; --paper:#1B2118; --ink:#ECEEE6; --muted:#9BA396;
+      --rule:#2C3327; --rule-strong:#414A3A; --accent:#63C598; --accent-soft:#1B2C21;
+      --gold:#E5C05C; --gold-soft:#332A12; --silver:#9AA5A0; --bronze:#C08A54;
+      --miss:#7C8378; --miss-bg:#1E221B; --hit-bg:#332A12; --hit-ink:#E5C05C;
+      --place-bg:#1B2C21; --place-ink:#7FD0A6;
+      --badge-ai-bg:#0E2521; --badge-ai-ink:#5FD6C0;
+      --badge-blog-bg:#251C33; --badge-blog-ink:#C9A6E8;
+      --badge-yt-bg:#301C17; --badge-yt-ink:#EA8F71;
+      --badge-ent-bg:#2E2410; --badge-ent-ink:#E5B85C;
+      --badge-cmp-bg:#161F30; --badge-cmp-ink:#8FB4EE;
+      --g1-bg:#301C17; --g1-ink:#EA8F71; --g2-bg:#161F30; --g2-ink:#8FB4EE; --g3-bg:#0E2521; --g3-ink:#5FD6C0;
+      --cat-g1:#E37456; --cat-g1-soft:#2E1B15; --cat-g2:#6FA8E8; --cat-g2-soft:#131E2C; --cat-g3:#5CC4AC; --cat-g3-soft:#0F211C; --cat-all:#63C598; --cat-all-soft:#16241B;
+      --shadow:0 1px 2px rgba(0,0,0,.35), 0 3px 12px rgba(0,0,0,.3);
+      --shadow-sm:0 1px 3px rgba(0,0,0,.35);
       --focus:#8FD6B4;
     }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0E120C; --paper:#1B2118; --ink:#ECEEE6; --muted:#9BA396;
+    --rule:#2C3327; --rule-strong:#414A3A; --accent:#63C598; --accent-soft:#1B2C21;
+    --gold:#E5C05C; --gold-soft:#332A12; --silver:#9AA5A0; --bronze:#C08A54;
+    --miss:#7C8378; --miss-bg:#1E221B; --hit-bg:#332A12; --hit-ink:#E5C05C;
+    --place-bg:#1B2C21; --place-ink:#7FD0A6;
+    --badge-ai-bg:#0E2521; --badge-ai-ink:#5FD6C0;
+    --badge-blog-bg:#251C33; --badge-blog-ink:#C9A6E8;
+    --badge-yt-bg:#301C17; --badge-yt-ink:#EA8F71;
+    --badge-ent-bg:#2E2410; --badge-ent-ink:#E5B85C;
+    --badge-cmp-bg:#161F30; --badge-cmp-ink:#8FB4EE;
+    --g1-bg:#301C17; --g1-ink:#EA8F71; --g2-bg:#161F30; --g2-ink:#8FB4EE; --g3-bg:#0E2521; --g3-ink:#5FD6C0;
+    --cat-g1:#E37456; --cat-g1-soft:#2E1B15; --cat-g2:#6FA8E8; --cat-g2-soft:#131E2C; --cat-g3:#5CC4AC; --cat-g3-soft:#0F211C; --cat-all:#63C598; --cat-all-soft:#16241B;
+    --shadow:0 1px 2px rgba(0,0,0,.35), 0 3px 12px rgba(0,0,0,.3);
+    --shadow-sm:0 1px 3px rgba(0,0,0,.35);
+    --focus:#8FD6B4;
   }
   *{ box-sizing:border-box; }
   body{ margin:0; background:var(--bg); color:var(--ink); font-family:"Noto Sans JP","Hiragino Sans",sans-serif; line-height:1.7; }
@@ -322,7 +349,7 @@ const SHARED_CSS = `
   }
   .kicker a{ text-decoration:underline; }
   h1.title{
-    font-family:"Noto Serif JP",serif; font-weight:900; font-size:clamp(26px,5vw,44px);
+    font-family:"Zen Kaku Gothic New",sans-serif; font-weight:900; font-size:clamp(26px,5vw,44px);
     text-align:center; margin:20px 0 4px; letter-spacing:.01em; text-wrap:balance;
   }
   p.subtitle{ text-align:center; color:var(--muted); font-size:14px; margin:0 0 20px; }
@@ -333,51 +360,80 @@ const SHARED_CSS = `
       linear-gradient(var(--ink),var(--ink)) bottom/100% 1px no-repeat;
   }
 
-  /* stats strip */
+  /* stats strip: individual white cards, like the reference site's data tiles */
   .stats-strip{
-    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
-    background:var(--rule); border:1px solid var(--rule); border-radius:8px;
-    overflow:hidden; margin-bottom:22px;
+    display:grid; grid-template-columns:repeat(4,1fr); gap:8px;
+    margin-bottom:20px;
   }
   .stat-tile{
-    background:var(--paper); padding:14px 10px; text-align:center;
-    display:flex; flex-direction:column; gap:4px;
+    background:var(--paper); border:1px solid var(--rule); border-radius:12px; box-shadow:var(--shadow-sm);
+    padding:12px 6px; text-align:center;
+    display:flex; flex-direction:column; gap:3px;
   }
   .stat-value{
-    font-family:"JetBrains Mono",monospace; font-weight:700; font-size:clamp(18px,4vw,26px);
+    font-family:"JetBrains Mono",monospace; font-weight:700; font-size:clamp(16px,4.2vw,24px);
     color:var(--accent); font-variant-numeric: tabular-nums;
   }
-  .stat-unit{ font-size:11px; font-weight:400; color:var(--muted); margin-left:2px; }
-  .stat-label{ font-size:11px; color:var(--muted); letter-spacing:.02em; }
+  .stat-unit{ font-size:10px; font-weight:400; color:var(--muted); margin-left:1px; }
+  .stat-label{ font-size:10.5px; color:var(--muted); letter-spacing:.01em; }
 
-  /* search / filter toolbar */
+  /* category nav cards: すべて/G1/G2/G3 as colorful icon cards (à la p-town.dmm.com's 店舗情報/機種情報/エンタメ tabs) */
+  .cat-nav{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:14px; }
+  .cat-card{
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+    background:var(--cat-soft,var(--accent-soft)); border:1.5px solid transparent; border-radius:14px;
+    padding:12px 6px 10px; cursor:pointer; font-family:"Noto Sans JP",sans-serif;
+  }
+  .cat-card .cat-icon{
+    width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    background:var(--cat-color,var(--accent)); color:#fff; font-family:"JetBrains Mono",monospace; font-weight:700; font-size:13px;
+  }
+  .cat-card .cat-label{ display:flex; flex-direction:column; align-items:center; gap:1px; font-weight:700; font-size:13px; color:var(--ink); }
+  .cat-card .cat-sub{ font-weight:400; font-size:10px; color:var(--muted); }
+  .cat-card[aria-pressed="true"]{ border-color:var(--cat-color,var(--accent)); box-shadow:var(--shadow-sm); }
+  .cat-card.cat-all{ --cat-soft:var(--cat-all-soft); --cat-color:var(--cat-all); }
+  .cat-card.cat-g1{ --cat-soft:var(--cat-g1-soft); --cat-color:var(--cat-g1); }
+  .cat-card.cat-g2{ --cat-soft:var(--cat-g2-soft); --cat-color:var(--cat-g2); }
+  .cat-card.cat-g3{ --cat-soft:var(--cat-g3-soft); --cat-color:var(--cat-g3); }
+
+  /* search toolbar */
   .toolbar{ margin-bottom:14px; }
+  .search-wrap{
+    position:relative; display:flex; align-items:center;
+    background:var(--paper); border:1px solid var(--rule-strong); border-radius:999px; box-shadow:var(--shadow-sm);
+    padding:4px 4px 4px 16px; margin-bottom:10px;
+  }
+  .search-wrap .search-icon{ color:var(--muted); font-size:14px; margin-right:8px; flex-shrink:0; }
   .search-box{
-    display:block; width:100%; font:14px "Noto Sans JP",sans-serif;
-    padding:10px 14px; border:1px solid var(--rule-strong); border-radius:6px;
-    background:var(--paper); color:var(--ink); margin-bottom:10px;
+    flex:1; border:none; background:transparent; font:14px "Noto Sans JP",sans-serif;
+    padding:8px 0; color:var(--ink); min-width:0;
   }
-  .search-box:focus{ outline:2px solid var(--focus); outline-offset:1px; }
-  .chip-row{ display:flex; gap:8px; flex-wrap:wrap; }
-  .chip-btn{
-    font:12.5px "Noto Sans JP",sans-serif; font-weight:500; padding:6px 14px;
-    border-radius:999px; border:1px solid var(--rule-strong); background:var(--paper);
-    color:var(--muted); cursor:pointer;
+  .search-box:focus{ outline:none; }
+  .search-wrap:focus-within{ border-color:var(--focus); box-shadow:0 0 0 2px var(--accent-soft); }
+  .search-go{
+    flex-shrink:0; font:700 12.5px "Noto Sans JP",sans-serif; color:#fff; background:var(--accent);
+    border:none; border-radius:999px; padding:9px 18px; cursor:pointer;
   }
-  .chip-btn[aria-pressed="true"]{ background:var(--accent); border-color:var(--accent); color:var(--paper); }
+  .tag-row{ display:flex; gap:7px; flex-wrap:wrap; align-items:center; }
+  .tag-row .tag-label{ font-size:11.5px; color:var(--muted); margin-right:2px; }
+  .quick-tag{
+    font:12px "Noto Sans JP",sans-serif; padding:5px 12px; border-radius:999px;
+    border:1px solid var(--rule); background:var(--bg); color:var(--muted); cursor:pointer;
+  }
+  .quick-tag:hover{ border-color:var(--accent); color:var(--accent); }
   .no-results{ display:none; text-align:center; color:var(--muted); padding:30px 0; font-size:13px; }
 
   /* race link list (index page) */
   .race-list{ display:flex; flex-direction:column; gap:9px; }
   a.race-row{
-    background:var(--paper); border:1px solid var(--rule); border-left:4px solid var(--rule-strong); border-radius:6px;
-    padding:12px 16px; text-decoration:none; color:inherit;
+    background:var(--paper); border:1px solid var(--rule); border-left:4px solid var(--rule-strong); border-radius:14px; box-shadow:var(--shadow-sm);
+    padding:13px 16px; text-decoration:none; color:inherit;
     display:grid; grid-template-columns:auto 1.4fr auto 2fr auto auto; gap:10px 14px; align-items:center;
   }
-  a.race-row.grade-g1{ border-left-color:var(--g1-ink); }
-  a.race-row.grade-g2{ border-left-color:var(--g2-ink); }
-  a.race-row.grade-g3{ border-left-color:var(--g3-ink); }
-  a.race-row:hover{ border-color:var(--accent); }
+  a.race-row.grade-g1{ border-left-color:var(--cat-g1); }
+  a.race-row.grade-g2{ border-left-color:var(--cat-g2); }
+  a.race-row.grade-g3{ border-left-color:var(--cat-g3); }
+  a.race-row:hover{ box-shadow:var(--shadow); transform:translateY(-1px); }
   a.race-row:focus-visible{ outline:2px solid var(--focus); outline-offset:2px; }
   .row-name{ font-weight:700; font-size:14.5px; }
   .row-venue{ font-weight:400; font-size:11.5px; color:var(--muted); margin-left:6px; }
@@ -385,7 +441,7 @@ const SHARED_CSS = `
   .row-result{ font-size:12.5px; color:var(--ink); }
   .row-count{ font-family:"JetBrains Mono",monospace; font-size:11px; color:var(--muted); white-space:nowrap; }
   .row-arrow{ font-size:12px; font-weight:700; color:var(--accent); white-space:nowrap; }
-  .grade-badge{ font-family:"JetBrains Mono",monospace; font-weight:700; font-size:12px; padding:3px 9px; border-radius:4px; white-space:nowrap; }
+  .grade-badge{ font-family:"JetBrains Mono",monospace; font-weight:700; font-size:12px; padding:3px 10px; border-radius:999px; white-space:nowrap; }
   .grade-badge.g1{ background:var(--g1-bg); color:var(--g1-ink); }
   .grade-badge.g2{ background:var(--g2-bg); color:var(--g2-ink); }
   .grade-badge.g3{ background:var(--g3-bg); color:var(--g3-ink); }
@@ -393,7 +449,7 @@ const SHARED_CSS = `
   /* source ranking table (index page) */
   section.ranking{ margin:34px 0; }
   .sec-note{ font-size:12px; color:var(--muted); margin:0 0 14px; line-height:1.6; }
-  .table-scroll{ overflow-x:auto; border:1px solid var(--rule); border-radius:6px; }
+  .table-scroll{ overflow-x:auto; border:1px solid var(--rule); border-radius:12px; box-shadow:var(--shadow-sm); }
   table.rank-table{ border-collapse:collapse; width:100%; min-width:520px; background:var(--paper); }
   table.rank-table thead th{
     font-size:11px; font-weight:700; text-align:left; color:var(--muted); text-transform:uppercase; letter-spacing:.04em;
@@ -411,32 +467,38 @@ const SHARED_CSS = `
   .race-facts{ display:flex; flex-wrap:wrap; gap:8px 10px; margin:16px 0; }
   .fact{ font-family:"JetBrains Mono",monospace; font-size:12px; color:var(--accent); background:var(--accent-soft); border:1px solid var(--rule); padding:5px 12px; border-radius:3px; }
   .podium{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:22px; }
-  .pod-card{ background:var(--bg); border:1px solid var(--rule); border-radius:6px; padding:14px 12px; text-align:center; }
-  .pod-card.first{ border-color:var(--gold); box-shadow:0 0 0 1px var(--gold) inset; }
+  .pod-card{ background:var(--paper); border:1px solid var(--rule); border-radius:14px; box-shadow:var(--shadow-sm); padding:14px 10px; text-align:center; }
+  .pod-card.first{ border-color:var(--gold); box-shadow:0 0 0 1.5px var(--gold) inset, var(--shadow-sm); }
   .pod-rank{ font-family:"JetBrains Mono",monospace; font-weight:700; font-size:12px; color:var(--muted); letter-spacing:.08em; text-transform:uppercase; }
   .pod-card.first .pod-rank{ color:var(--gold); }
-  .pod-uma{ font-family:"Noto Serif JP",serif; font-weight:700; font-size:18px; margin:6px 0 2px; }
-  .pod-meta{ font-size:12px; color:var(--muted); font-variant-numeric: tabular-nums; }
-  .callout{ background:var(--bg); border:1px solid var(--rule); border-left:5px solid var(--accent); padding:16px 18px; margin-bottom:26px; border-radius:2px; }
-  .callout h3{ font-family:"Noto Serif JP",serif; font-size:15px; margin:0 0 8px; }
+  .pod-uma{ font-family:"Zen Kaku Gothic New",sans-serif; font-weight:700; font-size:17px; margin:6px 0 2px; }
+  .pod-meta{ font-size:11.5px; color:var(--muted); font-variant-numeric: tabular-nums; }
+  .callout{ background:var(--accent-soft); border:1px solid var(--rule); border-left:5px solid var(--accent); padding:16px 18px; margin-bottom:26px; border-radius:14px; }
+  .callout h3{ font-family:"Zen Kaku Gothic New",sans-serif; font-size:15px; margin:0 0 8px; }
   .callout p{ margin:0 0 6px; font-size:13.5px; }
   .callout p:last-child{ margin-bottom:0; }
   .callout b{ color:var(--accent); }
   section.tally{ margin-bottom:22px; }
-  .sec-head{ display:flex; align-items:baseline; gap:10px; justify-content:space-between; border-bottom:2px solid var(--ink); padding-bottom:6px; margin-bottom:14px; }
-  .sec-head h2{ font-family:"Noto Serif JP",serif; font-size:17px; margin:0; }
-  .sec-head span{ font-family:"JetBrains Mono",monospace; font-size:11px; color:var(--muted); }
+  .sec-head{ display:flex; align-items:center; gap:10px; justify-content:space-between; padding-bottom:10px; margin-bottom:14px; }
+  .sec-head .sec-title{ display:flex; align-items:center; gap:9px; }
+  .sec-icon{
+    width:28px; height:28px; border-radius:50%; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--accent); color:#fff; font-size:14px;
+  }
+  .sec-head h2{ font-family:"Zen Kaku Gothic New",sans-serif; font-size:17px; margin:0; }
+  .sec-head span{ font-family:"JetBrains Mono",monospace; font-size:11px; color:var(--muted); white-space:nowrap; }
   .bar-row{ display:grid; grid-template-columns:130px 1fr auto; gap:10px; align-items:center; margin-bottom:9px; }
   .bar-label{ font-size:12.5px; font-weight:500; text-align:right; }
-  .bar-track{ background:var(--accent-soft); border-radius:3px; height:18px; overflow:hidden; }
-  .bar-fill{ height:100%; background:var(--rule-strong); border-radius:3px 0 0 3px; }
+  .bar-track{ background:var(--accent-soft); border-radius:999px; height:16px; overflow:hidden; }
+  .bar-fill{ height:100%; background:var(--rule-strong); border-radius:999px; }
   .bar-row.winner .bar-fill{ background:var(--gold); }
   .bar-row.winner .bar-label{ color:var(--gold); font-weight:700; }
   .bar-count{ display:flex; align-items:baseline; gap:8px; font-family:"JetBrains Mono",monospace; font-size:12.5px; font-weight:700; font-variant-numeric: tabular-nums; white-space:nowrap; }
   .bar-breakdown{ font-size:10.5px; font-weight:400; color:var(--muted); }
   .tally-note{ font-size:11.5px; color:var(--muted); margin-top:6px; }
   .pred-list{ display:flex; flex-direction:column; gap:12px; }
-  .pred-card{ background:var(--bg); border:1px solid var(--rule); border-radius:6px; padding:14px 16px; }
+  .pred-card{ background:var(--paper); border:1px solid var(--rule); border-radius:14px; box-shadow:var(--shadow-sm); padding:14px 16px; }
   .pred-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px 16px; flex-wrap:wrap; margin-bottom:9px; }
   .src-name{ font-weight:700; display:inline-block; font-size:14px; }
   .src-name:hover{ color:var(--accent); }
@@ -478,16 +540,31 @@ const SHARED_CSS = `
     .bar-row{ grid-template-columns:96px 1fr auto; }
     table.rank-table{ min-width:460px; }
     .stats-strip{ grid-template-columns:repeat(2,1fr); }
+    .wrap{ padding:0 14px 60px; }
+    header.masthead{ padding:16px 14px 0; }
+    .cat-nav{ gap:6px; }
+    .cat-card{ padding:9px 2px 7px; border-radius:12px; }
+    .cat-card .cat-icon{ width:28px; height:28px; font-size:11px; }
+    .cat-card .cat-label{ font-size:11.5px; }
+    .cat-card .cat-sub{ font-size:9px; }
+    .search-wrap{ flex-wrap:nowrap; }
+    .search-go{ padding:8px 12px; font-size:11.5px; }
   }
 `;
 
-const FONT_LINK = `<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">`;
+const FONT_LINK = `<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">`;
 
 // ---- index.html: a compact link list of every race (detail lives on each race's own page), plus a source ranking table. No upcoming schedule. ----
 const description = `JRAの重賞レース結果と、AI予想・専門ブログ・YouTube/note・芸能人企画など複数の予想元が事前に出していた◎○▲・根拠を並べて検証するアーカイブ。現在${races.length}レース分を公開中。`;
 
 const raceListHtml = races.map((r) => renderRaceLinkRow(r.data, r.folder)).join("\n");
 const rankingHtml = renderRankingTable(races);
+const gradeCounts = { G1: 0, G2: 0, G3: 0 };
+races.forEach((r) => { gradeCounts[r.data.grade] = (gradeCounts[r.data.grade] || 0) + 1; });
+const popularTagsHtml = races
+  .slice(0, 6)
+  .map((r) => `<button type="button" class="quick-tag" data-query="${escapeHtml(r.data.name)}">${escapeHtml(r.data.name)}</button>`)
+  .join("");
 
 const indexHtml = `<!doctype html>
 <html lang="ja">
@@ -547,17 +624,34 @@ ${adSlot("728 x 90", "ad-banner")}
 
   ${renderStatsStrip(races)}
 
+  <div class="cat-nav" id="grade-chips">
+    <button type="button" class="cat-card cat-all" data-grade="all" aria-pressed="true">
+      <span class="cat-icon">全</span><span class="cat-label">すべて<span class="cat-sub">${races.length}件</span></span>
+    </button>
+    <button type="button" class="cat-card cat-g1" data-grade="G1" aria-pressed="false">
+      <span class="cat-icon">G1</span><span class="cat-label">G1<span class="cat-sub">${gradeCounts.G1}件</span></span>
+    </button>
+    <button type="button" class="cat-card cat-g2" data-grade="G2" aria-pressed="false">
+      <span class="cat-icon">G2</span><span class="cat-label">G2<span class="cat-sub">${gradeCounts.G2}件</span></span>
+    </button>
+    <button type="button" class="cat-card cat-g3" data-grade="G3" aria-pressed="false">
+      <span class="cat-icon">G3</span><span class="cat-label">G3<span class="cat-sub">${gradeCounts.G3}件</span></span>
+    </button>
+  </div>
+
   <div class="rule-3"></div>
 
   <section>
-    <div class="sec-head"><h2>レース一覧</h2><span id="race-count-label">${races.length}レース公開中</span></div>
+    <div class="sec-head"><div class="sec-title"><span class="sec-icon">🏇</span><h2>レース一覧</h2></div><span id="race-count-label">${races.length}レース公開中</span></div>
     <div class="toolbar">
-      <input type="search" class="search-box" id="race-search" placeholder="レース名・競馬場で検索（例：新潟記念、阪神）">
-      <div class="chip-row" id="grade-chips">
-        <button type="button" class="chip-btn" data-grade="all" aria-pressed="true">すべて</button>
-        <button type="button" class="chip-btn" data-grade="G1" aria-pressed="false">G1</button>
-        <button type="button" class="chip-btn" data-grade="G2" aria-pressed="false">G2</button>
-        <button type="button" class="chip-btn" data-grade="G3" aria-pressed="false">G3</button>
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="search" class="search-box" id="race-search" placeholder="レース名・競馬場で検索（例：新潟記念、阪神）">
+        <button type="button" class="search-go" id="search-go">検索</button>
+      </div>
+      <div class="tag-row">
+        <span class="tag-label">よく見られているレース</span>
+        ${popularTagsHtml}
       </div>
     </div>
     <div class="race-list" id="race-list">
@@ -584,7 +678,9 @@ ${adSlot("728 x 90", "ad-banner")}
 <script>
 (function(){
   var search = document.getElementById('race-search');
-  var chips = document.querySelectorAll('#grade-chips .chip-btn');
+  var searchGo = document.getElementById('search-go');
+  var catCards = document.querySelectorAll('#grade-chips .cat-card');
+  var quickTags = document.querySelectorAll('.quick-tag');
   var rows = Array.prototype.slice.call(document.querySelectorAll('#race-list .race-row'));
   var noResults = document.getElementById('no-results');
   var countLabel = document.getElementById('race-count-label');
@@ -605,12 +701,20 @@ ${adSlot("728 x 90", "ad-banner")}
   }
 
   search.addEventListener('input', applyFilter);
-  chips.forEach(function(btn){
+  searchGo.addEventListener('click', applyFilter);
+  catCards.forEach(function(btn){
     btn.addEventListener('click', function(){
-      chips.forEach(function(b){ b.setAttribute('aria-pressed', 'false'); });
+      catCards.forEach(function(b){ b.setAttribute('aria-pressed', 'false'); });
       btn.setAttribute('aria-pressed', 'true');
       activeGrade = btn.dataset.grade;
       applyFilter();
+    });
+  });
+  quickTags.forEach(function(tag){
+    tag.addEventListener('click', function(){
+      search.value = tag.dataset.query;
+      applyFilter();
+      search.focus();
     });
   });
 })();
