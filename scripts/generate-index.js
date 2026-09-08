@@ -4,7 +4,7 @@ const path = require("path");
 const ROOT = path.join(__dirname, "..");
 const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, "manifest.json"), "utf8"));
 
-const SITE_NAME = "競馬予想比較";
+const SITE_NAME = "競馬分析";
 const SITE_URL = "https://haruikntv.github.io/keiba-yosou-hikaku/";
 const ADSENSE_TAG = '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7523687500134096" crossorigin="anonymous"></script>';
 
@@ -168,7 +168,8 @@ function resultCompactLine(result) {
 
 function renderRaceLinkRow(data, folder) {
   const slug = path.basename(folder);
-  return `<a class="race-row" href="./${slug}/">
+  const searchKey = escapeHtml(`${data.name}${data.venueShort}${data.grade}`.toLowerCase());
+  return `<a class="race-row grade-${data.grade.toLowerCase()}" href="./${slug}/" data-grade="${data.grade}" data-search="${searchKey}">
     <span class="grade-badge ${data.grade.toLowerCase()}">${data.grade}</span>
     <span class="row-name">${escapeHtml(data.name)}<span class="row-venue">${escapeHtml(data.venueShort)}</span></span>
     <span class="row-date">${dateLabel(data.date)}</span>
@@ -176,6 +177,39 @@ function renderRaceLinkRow(data, folder) {
     <span class="row-count">${data.sourceCountNote}</span>
     <span class="row-arrow">詳細を見る →</span>
   </a>`;
+}
+
+// ---- headline numbers for the stats strip ("how much data does this site actually have") ----
+function computeSiteStats(races) {
+  let markTotal = 0;
+  let sourceAppearances = 0;
+  races.forEach(({ data }) => {
+    sourceAppearances += data.sources.length;
+    data.sources.forEach((s) => {
+      markTotal += s.honmei.length + s.taikou.length + s.ana.length;
+    });
+  });
+  const uniqueSources = new Set();
+  races.forEach(({ data }) => data.sources.forEach((s) => uniqueSources.add(s.id || s.name)));
+  return {
+    raceCount: races.length,
+    uniqueSourceCount: uniqueSources.size,
+    sourceAppearances,
+    markTotal,
+  };
+}
+
+function renderStatsStrip(races) {
+  const s = computeSiteStats(races);
+  const tiles = [
+    ["収録レース数", s.raceCount, "件"],
+    ["検証した予想元", s.uniqueSourceCount, "種類"],
+    ["予想元 × レース", s.sourceAppearances, "件"],
+    ["集計した◎○▲", s.markTotal, "個"],
+  ];
+  return `<div class="stats-strip">
+    ${tiles.map(([label, value, unit]) => `<div class="stat-tile"><span class="stat-value">${value.toLocaleString("ja-JP")}<span class="stat-unit">${unit}</span></span><span class="stat-label">${label}</span></div>`).join("")}
+  </div>`;
 }
 
 // ---- source performance ranking: aggregate every source's ◎ pick across every race it appeared in ----
@@ -299,13 +333,50 @@ const SHARED_CSS = `
       linear-gradient(var(--ink),var(--ink)) bottom/100% 1px no-repeat;
   }
 
+  /* stats strip */
+  .stats-strip{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:var(--rule); border:1px solid var(--rule); border-radius:8px;
+    overflow:hidden; margin-bottom:22px;
+  }
+  .stat-tile{
+    background:var(--paper); padding:14px 10px; text-align:center;
+    display:flex; flex-direction:column; gap:4px;
+  }
+  .stat-value{
+    font-family:"JetBrains Mono",monospace; font-weight:700; font-size:clamp(18px,4vw,26px);
+    color:var(--accent); font-variant-numeric: tabular-nums;
+  }
+  .stat-unit{ font-size:11px; font-weight:400; color:var(--muted); margin-left:2px; }
+  .stat-label{ font-size:11px; color:var(--muted); letter-spacing:.02em; }
+
+  /* search / filter toolbar */
+  .toolbar{ margin-bottom:14px; }
+  .search-box{
+    display:block; width:100%; font:14px "Noto Sans JP",sans-serif;
+    padding:10px 14px; border:1px solid var(--rule-strong); border-radius:6px;
+    background:var(--paper); color:var(--ink); margin-bottom:10px;
+  }
+  .search-box:focus{ outline:2px solid var(--focus); outline-offset:1px; }
+  .chip-row{ display:flex; gap:8px; flex-wrap:wrap; }
+  .chip-btn{
+    font:12.5px "Noto Sans JP",sans-serif; font-weight:500; padding:6px 14px;
+    border-radius:999px; border:1px solid var(--rule-strong); background:var(--paper);
+    color:var(--muted); cursor:pointer;
+  }
+  .chip-btn[aria-pressed="true"]{ background:var(--accent); border-color:var(--accent); color:var(--paper); }
+  .no-results{ display:none; text-align:center; color:var(--muted); padding:30px 0; font-size:13px; }
+
   /* race link list (index page) */
   .race-list{ display:flex; flex-direction:column; gap:9px; }
   a.race-row{
-    background:var(--paper); border:1px solid var(--rule); border-radius:6px;
+    background:var(--paper); border:1px solid var(--rule); border-left:4px solid var(--rule-strong); border-radius:6px;
     padding:12px 16px; text-decoration:none; color:inherit;
     display:grid; grid-template-columns:auto 1.4fr auto 2fr auto auto; gap:10px 14px; align-items:center;
   }
+  a.race-row.grade-g1{ border-left-color:var(--g1-ink); }
+  a.race-row.grade-g2{ border-left-color:var(--g2-ink); }
+  a.race-row.grade-g3{ border-left-color:var(--g3-ink); }
   a.race-row:hover{ border-color:var(--accent); }
   a.race-row:focus-visible{ outline:2px solid var(--focus); outline-offset:2px; }
   .row-name{ font-weight:700; font-size:14.5px; }
@@ -406,6 +477,7 @@ const SHARED_CSS = `
     .podium{ grid-template-columns:1fr; }
     .bar-row{ grid-template-columns:96px 1fr auto; }
     table.rank-table{ min-width:460px; }
+    .stats-strip{ grid-template-columns:repeat(2,1fr); }
   }
 `;
 
@@ -423,7 +495,7 @@ const indexHtml = `<!doctype html>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 ${ADSENSE_TAG}
-<title>${SITE_NAME}｜レース結果と予想の検証アーカイブ</title>
+<title>${SITE_NAME}｜レース結果と予想データの検証サイト</title>
 <meta name="description" content="${escapeHtml(description)}" />
 <link rel="canonical" href="${SITE_URL}" />
 <meta property="og:type" content="website" />
@@ -467,18 +539,31 @@ ${adSlot("728 x 90", "ad-banner")}
 
 <header class="masthead">
   <div class="kicker">
-    <span>KEIBA YOSOU HIKAKU</span>
+    <span>KEIBA BUNSEKI</span>
     <span>公開中 ${races.length}レース</span>
   </div>
   <h1 class="title">${SITE_NAME}</h1>
-  <p class="subtitle">これから出す予想ではなく、終わったレースの結果と、各予想サイトが事前に何を◎にしていたかを並べて検証するアーカイブです。レースをクリックすると根拠まで見られる詳細ページへ移動します。</p>
+  <p class="subtitle">これから出す予想ではなく、終わったレースの結果と、各予想サイトが事前に何を◎にしていたかを集めて検証するデータサイトです。レースをクリックすると根拠まで見られる詳細ページへ移動します。</p>
+
+  ${renderStatsStrip(races)}
+
   <div class="rule-3"></div>
 
   <section>
-    <div class="sec-head"><h2>レース一覧</h2><span>${races.length}レース公開中</span></div>
-    <div class="race-list">
+    <div class="sec-head"><h2>レース一覧</h2><span id="race-count-label">${races.length}レース公開中</span></div>
+    <div class="toolbar">
+      <input type="search" class="search-box" id="race-search" placeholder="レース名・競馬場で検索（例：新潟記念、阪神）">
+      <div class="chip-row" id="grade-chips">
+        <button type="button" class="chip-btn" data-grade="all" aria-pressed="true">すべて</button>
+        <button type="button" class="chip-btn" data-grade="G1" aria-pressed="false">G1</button>
+        <button type="button" class="chip-btn" data-grade="G2" aria-pressed="false">G2</button>
+        <button type="button" class="chip-btn" data-grade="G3" aria-pressed="false">G3</button>
+      </div>
+    </div>
+    <div class="race-list" id="race-list">
       ${raceListHtml}
     </div>
+    <p class="no-results" id="no-results">条件に一致するレースが見つかりませんでした。</p>
   </section>
 </header>
 
@@ -496,6 +581,40 @@ ${adSlot("728 x 90", "ad-banner")}
     <p><a href="https://github.com/HARUIKNTV/keiba-yosou-hikaku">GitHubリポジトリ</a> ｜ <a href="https://haruikntv.github.io/">HARUIKNTV トップ</a></p>
   </footer>
 </div>
+<script>
+(function(){
+  var search = document.getElementById('race-search');
+  var chips = document.querySelectorAll('#grade-chips .chip-btn');
+  var rows = Array.prototype.slice.call(document.querySelectorAll('#race-list .race-row'));
+  var noResults = document.getElementById('no-results');
+  var countLabel = document.getElementById('race-count-label');
+  var activeGrade = 'all';
+
+  function applyFilter(){
+    var q = search.value.trim().toLowerCase();
+    var visible = 0;
+    rows.forEach(function(row){
+      var gradeOk = activeGrade === 'all' || row.dataset.grade === activeGrade;
+      var textOk = !q || row.dataset.search.indexOf(q) !== -1;
+      var show = gradeOk && textOk;
+      row.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    noResults.style.display = visible === 0 ? 'block' : 'none';
+    countLabel.textContent = visible + 'レース表示中';
+  }
+
+  search.addEventListener('input', applyFilter);
+  chips.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      chips.forEach(function(b){ b.setAttribute('aria-pressed', 'false'); });
+      btn.setAttribute('aria-pressed', 'true');
+      activeGrade = btn.dataset.grade;
+      applyFilter();
+    });
+  });
+})();
+</script>
 </body>
 </html>
 `;
@@ -536,7 +655,7 @@ ${adSlot("728 x 90", "ad-banner")}
 
 <header class="masthead">
   <div class="kicker">
-    <span><a href="../">${SITE_NAME}</a> / KEIBA YOSOU HIKAKU</span>
+    <span><a href="../">${SITE_NAME}</a> / KEIBA BUNSEKI</span>
     <span>${data.sourceCountNote}</span>
   </div>
   <h1 class="title">${escapeHtml(data.name)}${data.date.slice(0, 4)} 全予想比較</h1>
