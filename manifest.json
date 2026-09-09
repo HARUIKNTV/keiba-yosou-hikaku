@@ -1,9 +1,12 @@
 {
   "races": [
+    "apps/2026-01-04-kyoto-kimpai",
     "apps/2026-01-04-nakayama-kimpai",
+    "apps/2026-01-18-nikkei-shinshun-hai",
     "apps/2026-02-10-tokyo-shimbun-hai",
     "apps/2026-02-22-february-stakes",
     "apps/2026-03-01-nakayama-kinen",
+    "apps/2026-03-22-aichi-hai",
     "apps/2026-03-22-hanshin-daishoten",
     "apps/2026-04-05-osaka-hai",
     "apps/2026-04-12-oka-sho",
