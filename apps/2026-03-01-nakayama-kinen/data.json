@@ -1,0 +1,35 @@
+{
+  "slug": "2026-03-01-nakayama-kinen",
+  "name": "中山記念",
+  "grade": "G2",
+  "venue": "中山競馬場 芝1800m",
+  "venueShort": "中山・芝1800m",
+  "date": "2026-03-01",
+  "extraFacts": ["15番人気の配当"],
+  "result": [
+    { "rank": 1, "num": 5, "name": "レーベンスティール", "meta": "" },
+    { "rank": 2, "num": 9, "name": "カラマティアノス", "meta": "" },
+    { "rank": 3, "num": 10, "name": "エコロヴァルツ", "meta": "" }
+  ],
+  "summary": [
+    "◎(本命)は「うましる」が⑤レーベンスティールを本命指名し的中。重賞4勝の実力と芝1800mでの複勝率100%という実績を評価していました。",
+    "鉄矢の競馬予想は◎⑨カラマティアノス・○⑩エコロヴァルツで2着・3着を的中。競馬コンシェルジュの須田鷹雄・古谷剛彦はいずれも1〜3着馬を▲(穴)の一つとして押さえていましたが、◎本命には別の馬を指名していました。"
+  ],
+  "tallyNote": "◎3点・○2点・▲穴1点で集計。実際の勝ち馬（⑤レーベンスティール）はうましるの◎1票に加え、他予想元からも○・▲評価を集めていました。",
+  "sourceCount": 4,
+  "sourceCountNote": "4予想元",
+  "sources": [
+    { "id": "umashiru", "name": "うましる", "url": "https://umasiru.com/archives/18764", "badge": "blog", "label": "個人ブログ",
+      "honmei": [{ "num": 5, "name": "レーベンスティール" }], "taikou": [{ "num": 10, "name": "エコロヴァルツ" }], "ana": [{ "num": 3, "name": "マジックサンズ" }, { "num": 1, "name": "セイウンハーデス" }],
+      "reason": "重賞4勝の実力馬で芝1800mでの複勝率が100%と抜群の適性を持つ点を評価し的中させた。" },
+    { "id": "tetsuya", "name": "鉄矢の競馬予想", "url": "https://www.keiba-jiku2.net/nakayama-kinen-2026-yosou/", "badge": "blog", "label": "個人ブログ",
+      "honmei": [{ "num": 9, "name": "カラマティアノス" }], "taikou": [{ "num": 10, "name": "エコロヴァルツ" }], "ana": [{ "num": 5, "name": "レーベンスティール" }],
+      "reason": "「中山金杯を好位から押し切り、終い11.1で伸び抜群」と評価。対抗・穴で2着・1着を的中させた。" },
+    { "id": "concierge-suda", "name": "須田鷹雄（競馬コンシェルジュ）", "url": "https://entameboy.com/concierge-2026-03-01/", "badge": "cmp", "label": "予想印まとめ",
+      "honmei": [{ "num": 10, "name": "エコロヴァルツ" }], "taikou": [{ "num": 6, "name": "チェルヴィニア" }], "ana": [{ "num": 1, "name": "セイウンハーデス" }, { "num": 5, "name": "レーベンスティール" }, { "num": 9, "name": "カラマティアノス" }, { "num": 14, "name": "シャンパンカラー" }],
+      "reason": "対抗エコロヴァルツで3着を、穴で1着・2着も的中させた。" },
+    { "id": "concierge-furuya", "name": "古谷剛彦（競馬コンシェルジュ）", "url": "https://entameboy.com/concierge-2026-03-01/", "badge": "cmp", "label": "予想印まとめ",
+      "honmei": [{ "num": 14, "name": "シャンパンカラー" }], "taikou": [{ "num": 5, "name": "レーベンスティール" }], "ana": [{ "num": 10, "name": "エコロヴァルツ" }, { "num": 6, "name": "チェルヴィニア" }, { "num": 9, "name": "カラマティアノス" }, { "num": 1, "name": "セイウンハーデス" }],
+      "reason": "対抗レーベンスティールで1着を、穴で2着・3着も的中させた。" }
+  ]
+}
