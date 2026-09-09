@@ -1,0 +1,35 @@
+{
+  "slug": "2026-02-10-tokyo-shimbun-hai",
+  "name": "東京新聞杯",
+  "grade": "G3",
+  "venue": "東京競馬場 芝1600m",
+  "venueShort": "東京・芝1600m",
+  "date": "2026-02-10",
+  "extraFacts": ["ルメール騎手・重賞2勝目"],
+  "result": [
+    { "rank": 1, "num": 7, "name": "トロヴァトーレ", "meta": "ルメール騎手・重賞2勝目" },
+    { "rank": 2, "num": 2, "name": "ラヴァンダ", "meta": "岩田望来騎手" },
+    { "rank": 3, "num": 12, "name": "ウォーターリヒト", "meta": "高杉吏麒騎手" }
+  ],
+  "summary": [
+    "◎(本命)が最も集まったのは<b>⑫ウォーターリヒト(2票)</b>で3着に入りましたが、優勝したのは鉄矢の競馬予想が唯一▲(穴)でマークしていた<b>⑦トロヴァトーレ</b>。「トップハンデから相対的に好転し、追い切りで好調持続」との評価が的中しました。",
+    "2着⑦ラヴァンダは津田照之（競馬コンシェルジュ）が本命指名で的中。うましるも穴馬として事前にマークしていました。"
+  ],
+  "tallyNote": "◎3点・○2点・▲穴1点で集計。実際の勝ち馬（⑦トロヴァトーレ）は鉄矢の▲1票のみでしたが、◎最多だった⑫ウォーターリヒト（2票）も3着に食い込む堅実な決着でした。",
+  "sourceCount": 4,
+  "sourceCountNote": "4予想元",
+  "sources": [
+    { "id": "umashiru", "name": "うましる", "url": "https://umasiru.com/archives/18375", "badge": "blog", "label": "個人ブログ",
+      "honmei": [{ "num": 12, "name": "ウォーターリヒト" }], "taikou": [{ "num": 4, "name": "マジックサンズ" }], "ana": [{ "num": 5, "name": "エルトンバローズ" }, { "num": 2, "name": "ラヴァンダ" }, { "num": 6, "name": "オフトレイル" }],
+      "reason": "昨年の東京新聞杯勝ち馬で連覇を狙う点と、寒い時期に強い特性を評価し3着で的中させた。" },
+    { "id": "tetsuya", "name": "鉄矢の競馬予想", "url": "https://www.keiba-jiku2.net/tokyo-shimbunhai-2026-yosou/", "badge": "blog", "label": "個人ブログ",
+      "honmei": [{ "num": 12, "name": "ウォーターリヒト" }], "taikou": [{ "num": 5, "name": "エルトンバローズ" }], "ana": [{ "num": 7, "name": "トロヴァトーレ" }],
+      "reason": "「京都金杯4着は展開不向きでも終いが目立った」とトップハンデからの好転を見込み穴指名し、優勝を的中させた。" },
+    { "id": "concierge-munehiro", "name": "棟広良隆（競馬コンシェルジュ）", "url": "https://entameboy.com/concierge-2026-02-08/", "badge": "cmp", "label": "予想印まとめ",
+      "honmei": [{ "num": 14, "name": "ミッキーゴージャス" }], "taikou": [{ "num": 12, "name": "ウォーターリヒト" }], "ana": [{ "num": 5, "name": "エルトンバローズ" }],
+      "reason": "対抗ウォーターリヒトで3着を的中させた。" },
+    { "id": "concierge-tsuda", "name": "津田TM／津田照之（競馬コンシェルジュ）", "url": "https://entameboy.com/concierge-2026-02-08/", "badge": "cmp", "label": "予想印まとめ",
+      "honmei": [{ "num": 2, "name": "ラヴァンダ" }], "taikou": [{ "num": 12, "name": "ウォーターリヒト" }], "ana": [{ "num": 6, "name": "オフトレイル" }, { "num": 5, "name": "エルトンバローズ" }],
+      "reason": "本命ラヴァンダで2着、対抗ウォーターリヒトで3着とも的中させた。" }
+  ]
+}
