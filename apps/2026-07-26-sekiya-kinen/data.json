@@ -1,0 +1,50 @@
+{
+  "slug": "2026-07-26-sekiya-kinen",
+  "name": "関屋記念",
+  "grade": "G3",
+  "venue": "新潟競馬場 芝1600m",
+  "venueShort": "新潟・芝1600m",
+  "date": "2026-07-26",
+  "extraFacts": ["不良馬場", "キャリア6戦4勝・重賞初制覇"],
+  "result": [
+    { "rank": 1, "num": 3, "name": "アンパドゥ", "meta": "1番人気・単勝4.8倍・1:32.4" },
+    { "rank": 2, "num": 10, "name": "クランフォード", "meta": "8番人気" },
+    { "rank": 3, "num": 1, "name": "ファーヴェント", "meta": "6番人気" }
+  ],
+  "summary": [
+    "◎(本命)が最も集まったのは<b>⑧ダノンセンチュリーと⑪ドロップオブライトにそれぞれ2票</b>ずつで、点数化した合計（◎3点・○2点・▲穴1点）でも両馬が7点で並びトップでした。しかし優勝したのは◎1票・○2票で同じ7点だった<b>③アンパドゥ</b>。◎最多だった2頭はいずれも二桁着順に敗れています。",
+    "◎③アンパドゥを本命にしていたのは「鉄矢の競馬予想」のみ。「キャリア6戦ながら4勝と底を見せておらず、前走も鋭い末脚で差し切り勝ち」と評価し、的中させました。2着⑩クランフォードはBS11の舩山陽司が本命で的中。Winsightは◎⑭メタルスピードでしたが着外でした。"
+  ],
+  "tallyNote": "◎3点・○2点・▲穴1点で集計。実際の勝ち馬（③アンパドゥ）は◎最多だった⑧ダノンセンチュリー・⑪ドロップオブライトと並ぶ最多評価（7点）でしたが、◎票はわずか1票でした。",
+  "sourceCount": 9,
+  "sourceCountNote": "9予想元",
+  "sources": [
+    { "id": "tetsuya", "name": "鉄矢の競馬予想", "url": "https://www.keiba-jiku2.net/sekiya-kinen-2026-yosou/", "badge": "blog", "label": "個人ブログ",
+      "honmei": [{ "num": 3, "name": "アンパドゥ" }], "taikou": [], "ana": [],
+      "reason": "「まだキャリア6戦ながら4勝と底を見せておらず、前走も鋭い末脚で差し切り勝ち」と評価。追い切りでも「動き・気配ともにメンバー上位だった」とし、56kgの軽い斤量と新潟外回りの長い直線が瞬発力を最大限に生かせる条件と判断した。" },
+    { "id": "winsight", "name": "Winsight（AI見解）", "url": "https://winsight.jp/column/column_page?id=28902", "badge": "ai", "label": "AI予想",
+      "honmei": [{ "num": 14, "name": "メタルスピード" }], "taikou": [{ "num": 10, "name": "クランフォード" }], "ana": [{ "num": 11, "name": "ドロップオブライト" }],
+      "reason": "「ハナを強く主張しそうな馬が少なく、単騎でマイペースに運べる可能性が高い」と評価し外枠のメタルスピードを本命に。対抗クランフォードは重馬場経験と手ごろな斤量、穴ドロップオブライトは重馬場実績【1-0-2-0】を根拠とした。" },
+    { "id": "umashiru", "name": "うましる", "url": "https://umasiru.com/archives/20774", "badge": "blog", "label": "個人ブログ",
+      "honmei": [{ "num": 11, "name": "ドロップオブライト" }], "taikou": [{ "num": 7, "name": "エルトンバローズ" }], "ana": [{ "num": 1, "name": "ファーヴェント" }],
+      "reason": "7歳馬ながら「追い切りも良かったので3つ目の重賞制覇に期待」でき、稍重以下【1-0-2-2】と道悪実績もある点を評価。対抗エルトンバローズは前走2年半ぶり勝利の充実度、穴ファーヴェントは力の要る馬場との相性を根拠とした。" },
+    { "id": "concierge-furuya", "name": "古谷剛彦（競馬コンシェルジュ）", "url": "https://entameboy.com/concierge-2026-07-26/", "badge": "cmp", "label": "予想印まとめ",
+      "honmei": [{ "num": 8, "name": "ダノンセンチュリー" }], "taikou": [{ "num": 3, "name": "アンパドゥ" }], "ana": [{ "num": 7, "name": "エルトンバローズ" }],
+      "reason": "" },
+    { "id": "concierge-munehiro", "name": "棟広良隆（競馬コンシェルジュ）", "url": "https://entameboy.com/concierge-2026-07-26/", "badge": "cmp", "label": "予想印まとめ",
+      "honmei": [{ "num": 1, "name": "ファーヴェント" }], "taikou": [{ "num": 3, "name": "アンパドゥ" }], "ana": [{ "num": 8, "name": "ダノンセンチュリー" }],
+      "reason": "「新潟芝1600mで長岡Sを上がり33秒0の鋭い末脚で制している」上にコース相性が良く、稍重の重賞実績もあり道悪対応可能と評価した。" },
+    { "id": "concierge-ogi", "name": "小木茂光・支配人（競馬コンシェルジュ）", "url": "https://entameboy.com/concierge-2026-07-26/", "badge": "cmp", "label": "予想印まとめ",
+      "honmei": [{ "num": 9, "name": "サンダーストラック" }], "taikou": [], "ana": [],
+      "reason": "" },
+    { "id": "bs11-funayama", "name": "舩山陽司（BS11競馬中継）", "url": "https://entameboy.com/bs11-keiba-2026/", "badge": "ent", "label": "芸能人企画",
+      "honmei": [{ "num": 10, "name": "クランフォード" }], "taikou": [], "ana": [],
+      "reason": "「持ち前のゲートの速さを生かしてスムーズに2、3番手を確保できれば、簡単には止まらないタイプ」と評価し、2着で的中させた。" },
+    { "id": "bs11-kaito", "name": "皆藤愛子（BS11競馬中継）", "url": "https://entameboy.com/bs11-keiba-2026/", "badge": "ent", "label": "芸能人企画",
+      "honmei": [{ "num": 8, "name": "ダノンセンチュリー" }], "taikou": [], "ana": [],
+      "reason": "距離短縮による適性向上を期待して本命に指名したが11着までだった。" },
+    { "id": "bs11-higashi", "name": "東幹久（BS11競馬中継）", "url": "https://entameboy.com/bs11-keiba-2026/", "badge": "ent", "label": "芸能人企画",
+      "honmei": [{ "num": 11, "name": "ドロップオブライト" }], "taikou": [], "ana": [],
+      "reason": "コーナー企画「咲良これを買え」で推奨した1頭だったが12着までだった。" }
+  ]
+}

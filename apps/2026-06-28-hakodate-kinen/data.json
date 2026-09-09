@@ -1,0 +1,50 @@
+{
+  "slug": "2026-06-28-hakodate-kinen",
+  "name": "函館記念",
+  "grade": "G2",
+  "venue": "函館競馬場 芝2000m",
+  "venueShort": "函館・芝2000m",
+  "date": "2026-06-28",
+  "extraFacts": ["10番人気の大波乱", "小林美駒騎手2度目の重賞制覇"],
+  "result": [
+    { "rank": 1, "num": 2, "name": "ファウストラーゼン", "meta": "10番人気・小林美駒騎手・2度目の重賞制覇・1:57.7" },
+    { "rank": 2, "num": 10, "name": "ケリフレッドアスク", "meta": "7番人気・1/2馬身差" },
+    { "rank": 3, "num": 3, "name": "ピースワンデュック", "meta": "" }
+  ],
+  "summary": [
+    "◎(本命)は<b>②ファウストラーゼンと⑧ケイアイセナにそれぞれ2票</b>ずつ集まり、点数化した合計（◎3点・○2点・▲穴1点）でも両馬が6点で並んでトップでした。実際に優勝したのは10番人気の②ファウストラーゼンで、まさかの大波乱の決着に。同じく2票を集めていた⑧ケイアイセナは4着まででした。",
+    "◎②ファウストラーゼンを本命にしていたのはWinsight（AI予想）とシャンプーハット恋さん（うまんちゅ企画）の2予想元のみ。2着⑩ケリフレッドアスクはミサイルマン岩部が、3着③ピースワンデュックはシャンプーハットてつじがそれぞれ本命で的中させており、うまんちゅ企画の7予想中3つが馬券圏内を的中させる好成績でした。"
+  ],
+  "tallyNote": "◎3点・○2点・▲穴1点で集計。実際の勝ち馬（②ファウストラーゼン）は⑧ケイアイセナと並ぶ最多評価（2票・6点）でしたが、10番人気という人気薄での大波乱でした。",
+  "sourceCount": 9,
+  "sourceCountNote": "9予想元",
+  "sources": [
+    { "id": "winsight", "name": "Winsight（AI見解）", "url": "https://winsight.jp/column/column_page?id=26783", "badge": "ai", "label": "AI予想",
+      "honmei": [{ "num": 2, "name": "ファウストラーゼン" }], "taikou": [{ "num": 5, "name": "イガッチ" }, { "num": 12, "name": "エコロディノス" }], "ana": [{ "num": 4, "name": "マジックサンズ" }, { "num": 11, "name": "ジュタ" }, { "num": 10, "name": "ケリフレッドアスク" }, { "num": 7, "name": "チャックネイト" }, { "num": 6, "name": "サンストックトン" }, { "num": 3, "name": "ピースワンデュック" }],
+      "reason": "独自指数WINDEX上位評価の②ファウストラーゼンを本命に、洋芝実績のある⑤イガッチと⑫エコロディノスを対抗評価。妙味馬として④マジックサンズや⑪ジュタ、⑩ケリフレッドアスクなど人気薄グループの取捨にも言及した。" },
+    { "id": "umashiru", "name": "うましる", "url": "https://umasiru.com/archives/20460", "badge": "blog", "label": "個人ブログ",
+      "honmei": [{ "num": 8, "name": "ケイアイセナ" }], "taikou": [], "ana": [],
+      "reason": "近走の内容と函館芝コースへの適性を評価し本命に指名したが、結果は4着まで。" },
+    { "id": "umanchu-sakamoto", "name": "うまんちゅ企画・坂本和也TM", "url": "https://entameboy.com/umanchu-2026-06-28/", "badge": "ent", "label": "芸能人企画",
+      "honmei": [{ "num": 8, "name": "ケイアイセナ" }], "taikou": [], "ana": [],
+      "reason": "近走の充実ぶりを評価し本命としたが4着に終わった。" },
+    { "id": "umanchu-asagoe", "name": "うまんちゅ企画・浅越ゴエ", "url": "https://entameboy.com/umanchu-2026-06-28/", "badge": "ent", "label": "芸能人企画",
+      "honmei": [{ "num": 11, "name": "ジュタ" }], "taikou": [], "ana": [],
+      "reason": "穴馬候補として評価したが14着と大きく崩れた。" },
+    { "id": "umanchu-oniichan", "name": "うまんちゅ企画・ビタミンSお兄ちゃん", "url": "https://entameboy.com/umanchu-2026-06-28/", "badge": "ent", "label": "芸能人企画",
+      "honmei": [{ "num": 5, "name": "イガッチ" }], "taikou": [], "ana": [],
+      "reason": "洋芝適性を評価し本命としたが6着までだった。" },
+    { "id": "umanchu-iwabe", "name": "うまんちゅ企画・ミサイルマン岩部", "url": "https://entameboy.com/umanchu-2026-06-28/", "badge": "ent", "label": "芸能人企画",
+      "honmei": [{ "num": 10, "name": "ケリフレッドアスク" }], "taikou": [], "ana": [],
+      "reason": "近走の安定感を評価して本命に指名し、2着で的中させた。" },
+    { "id": "umanchu-koisan", "name": "うまんちゅ企画・シャンプーハット恋さん", "url": "https://entameboy.com/umanchu-2026-06-28/", "badge": "ent", "label": "芸能人企画",
+      "honmei": [{ "num": 2, "name": "ファウストラーゼン" }], "taikou": [], "ana": [],
+      "reason": "人気薄ながら成長力を評価して本命に指名し、見事1着的中を果たした。" },
+    { "id": "umanchu-tetsuji", "name": "うまんちゅ企画・シャンプーハットてつじ", "url": "https://entameboy.com/umanchu-2026-06-28/", "badge": "ent", "label": "芸能人企画",
+      "honmei": [{ "num": 3, "name": "ピースワンデュック" }], "taikou": [], "ana": [],
+      "reason": "地力の高さを評価して本命に指名し、3着で的中させた。" },
+    { "id": "umanchu-hayashi", "name": "うまんちゅ企画・ギャロップ林", "url": "https://entameboy.com/umanchu-2026-06-28/", "badge": "ent", "label": "芸能人企画",
+      "honmei": [{ "num": 12, "name": "エコロディノス" }], "taikou": [], "ana": [],
+      "reason": "洋芝血統背景を評価して本命としたが9着までだった。" }
+  ]
+}
