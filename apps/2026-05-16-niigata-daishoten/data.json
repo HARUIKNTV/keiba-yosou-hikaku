@@ -1,0 +1,32 @@
+{
+  "slug": "2026-05-16-niigata-daishoten",
+  "name": "新潟大賞典",
+  "grade": "G3",
+  "venue": "新潟競馬場 芝2000m外回り",
+  "venueShort": "新潟・芝2000m外回り",
+  "date": "2026-05-16",
+  "extraFacts": ["西村淳也騎手・2週連続重賞制覇", "7歳での重賞初制覇"],
+  "result": [
+    { "rank": 1, "num": 3, "name": "グランディア", "meta": "西村淳也騎手・7歳での重賞初制覇" },
+    { "rank": 2, "num": 11, "name": "バレエマスター", "meta": "クビ差" },
+    { "rank": 3, "num": 9, "name": "フクノブルーレイク", "meta": "クビ差" }
+  ],
+  "summary": [
+    "◎(本命)が最も集まったのは<b>⑥ドゥラドーレス(2票)</b>でしたが着外に終わり、優勝したのは<b>③グランディア</b>。「うましる」が穴馬として、netkeiba予想家「小倉の馬券師T」が本命として指名し的中させています。",
+    "「充実期を迎えており、現在のタフな馬場が適性に合致」という評価が的中の決め手となり、7歳馬の重賞初制覇という結果になりました。"
+  ],
+  "tallyNote": "◎3点・○2点・▲穴1点で集計。実際の勝ち馬（③グランディア）は「小倉の馬券師T」の◎1票と「うましる」の▲1票の計4点。◎最多だった⑥ドゥラドーレス（2票）は着外でした。",
+  "sourceCount": 3,
+  "sourceCountNote": "3予想元",
+  "sources": [
+    { "id": "umashiru", "name": "うましる", "url": "https://umasiru.com/archives/19963", "badge": "blog", "label": "個人ブログ",
+      "honmei": [{ "num": 6, "name": "ドゥラドーレス" }], "taikou": [{ "num": 12, "name": "セキトバイースト" }], "ana": [{ "num": 15, "name": "シュガークン" }, { "num": 4, "name": "アンゴラブラック" }, { "num": 3, "name": "グランディア" }],
+      "reason": "「重賞で4戦連続2着と、安定した走りに定評がある」と評価。穴で挙げていたグランディアが優勝した。" },
+    { "id": "tetsuya", "name": "鉄矢の競馬予想", "url": "https://www.keiba-jiku2.net/niigata-daishoten-2026-yosou/", "badge": "blog", "label": "個人ブログ",
+      "honmei": [{ "num": 6, "name": "ドゥラドーレス" }], "taikou": [{ "num": 8, "name": "ヤマニンブークリエ" }], "ana": [{ "num": 13, "name": "シュトルーヴェ" }],
+      "reason": "「新潟外回りの長い直線で長く脚を使う持ち味が生きる舞台」と評価したが着外に終わった。" },
+    { "id": "netkeiba-kokura-t", "name": "小倉の馬券師T（netkeiba）", "url": "https://yoso.sp.netkeiba.com/?pid=yoso_detail&id=6048033", "badge": "blog", "label": "個人ブログ",
+      "honmei": [{ "num": 3, "name": "グランディア" }], "taikou": [{ "num": 6, "name": "ドゥラドーレス" }], "ana": [{ "num": 8, "name": "ヤマニンブークリエ" }],
+      "reason": "「充実期を迎えており、現在のタフな馬場が適性に合致」。前走大阪城Sは「ソラを使ってしまっただけ」で力負けではないと判断し的中させた。" }
+  ]
+}

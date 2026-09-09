@@ -1,0 +1,35 @@
+{
+  "slug": "2026-05-31-meguro-kinen",
+  "name": "目黒記念",
+  "grade": "G2",
+  "venue": "東京競馬場 芝2500m",
+  "venueShort": "東京・芝2500m",
+  "date": "2026-05-31",
+  "extraFacts": ["D.レーン騎手・重賞初制覇"],
+  "result": [
+    { "rank": 1, "num": 4, "name": "ファイアンクランツ", "meta": "3番人気・D.レーン騎手・重賞初制覇" },
+    { "rank": 2, "num": 6, "name": "ウィクトルウェルス", "meta": "1番人気" },
+    { "rank": 3, "num": 11, "name": "ダノンシーマ", "meta": "2番人気" }
+  ],
+  "summary": [
+    "古谷剛彦（競馬コンシェルジュ）が◎④ファイアンクランツを本命指名して的中。鉄矢の競馬予想・須田鷹雄は◎⑥ウィクトルウェルスで2着を的中させています。",
+    "「うましる」は3頭を並べる本命評価の中でファイアンクランツを最上位に置き、的中させました。上位人気3頭でそのまま決着する堅い一戦でした。"
+  ],
+  "tallyNote": "◎3点・○2点・▲穴1点で集計。実際の勝ち馬（④ファイアンクランツ）はうましる・古谷剛彦の◎評価を集め、鉄矢・須田鷹雄の▲・○評価も加わり上位人気3頭が順当に決着しました。",
+  "sourceCount": 4,
+  "sourceCountNote": "4予想元",
+  "sources": [
+    { "id": "umashiru", "name": "うましる", "url": "https://umasiru.com/archives/20117", "badge": "blog", "label": "個人ブログ",
+      "honmei": [{ "num": 4, "name": "ファイアンクランツ" }], "taikou": [{ "num": 6, "name": "ウィクトルウェルス" }], "ana": [{ "num": 11, "name": "ダノンシーマ" }, { "num": 12, "name": "キングズパレス" }, { "num": 9, "name": "ハーツコンチェルト" }],
+      "reason": "「レーン騎手も【2-1-0-1】と相性がいい」重賞での善戦実績を評価し的中させた。" },
+    { "id": "tetsuya", "name": "鉄矢の競馬予想", "url": "https://www.keiba-jiku2.net/meguro-kinen-2026-yosou/", "badge": "blog", "label": "個人ブログ",
+      "honmei": [{ "num": 6, "name": "ウィクトルウェルス" }], "taikou": [{ "num": 11, "name": "ダノンシーマ" }], "ana": [{ "num": 4, "name": "ファイアンクランツ" }],
+      "reason": "「追い切り・安定感・距離適性の三拍子が揃った存在」と評価。対抗・穴で3着・1着も的中させた。" },
+    { "id": "concierge-suda", "name": "須田鷹雄（競馬コンシェルジュ）", "url": "https://entameboy.com/concierge-2026-05-31/", "badge": "cmp", "label": "予想印まとめ",
+      "honmei": [{ "num": 6, "name": "ウィクトルウェルス" }], "taikou": [{ "num": 4, "name": "ファイアンクランツ" }], "ana": [{ "num": 8, "name": "ミラージュナイト" }],
+      "reason": "対抗ファイアンクランツで1着を的中させた。" },
+    { "id": "concierge-furuya", "name": "古谷剛彦（競馬コンシェルジュ）", "url": "https://entameboy.com/concierge-2026-05-31/", "badge": "cmp", "label": "予想印まとめ",
+      "honmei": [{ "num": 4, "name": "ファイアンクランツ" }], "taikou": [{ "num": 11, "name": "ダノンシーマ" }], "ana": [{ "num": 6, "name": "ウィクトルウェルス" }, { "num": 1, "name": "アマキヒ" }],
+      "reason": "本命ファイアンクランツで的中させ、対抗・穴も2着・3着を的中させた。" }
+  ]
+}
