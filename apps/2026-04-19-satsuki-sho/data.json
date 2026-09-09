@@ -1,0 +1,53 @@
+{
+  "slug": "2026-04-19-satsuki-sho",
+  "name": "皐月賞",
+  "grade": "G1",
+  "venue": "中山競馬場 芝2000m",
+  "venueShort": "中山・芝2000m",
+  "date": "2026-04-19",
+  "extraFacts": ["レコードタイム1:56.5", "松山弘平騎手"],
+  "result": [
+    { "rank": 1, "num": 4, "name": "ロブチェン", "meta": "松山弘平騎手・レコードタイム1:56.5" },
+    { "rank": 2, "num": 15, "name": "リアライズシリウス", "meta": "" },
+    { "rank": 3, "num": 9, "name": "ライヒスアドラー", "meta": "" }
+  ],
+  "summary": [
+    "◎(本命)が最も集まったのは<b>⑮リアライズシリウスと⑫グリーンエンジーにそれぞれ2票</b>ずつでしたが、優勝したのは<b>④ロブチェン</b>。◎票は「浅越ゴエ」の1票のみで、うましる・津田TMの2予想元が○(対抗)評価していた程度でした。",
+    "◎⑮リアライズシリウスを本命にしていた鉄矢の競馬予想・シャンプーハットてつじは2着で的中。3着⑨ライヒスアドラーは10予想元の中で誰もマークしていない完全な伏兵でした。"
+  ],
+  "tallyNote": "◎3点・○2点・▲穴1点で集計。実際の勝ち馬（④ロブチェン）は◎票1票・○票2票の計7点で、◎最多評価だった⑮リアライズシリウス・⑫グリーンエンジーはともに6点でした。",
+  "sourceCount": 10,
+  "sourceCountNote": "10予想元",
+  "sources": [
+    { "id": "umashiru", "name": "うましる", "url": "https://umasiru.com/archives/19496", "badge": "blog", "label": "個人ブログ",
+      "honmei": [{ "num": 18, "name": "バステール" }], "taikou": [{ "num": 4, "name": "ロブチェン" }], "ana": [{ "num": 11, "name": "パントルナイフ" }, { "num": 17, "name": "アドマイヤクワッズ" }, { "num": 16, "name": "アルトラムス" }],
+      "reason": "「弥生賞ディープインパクト記念は着差以上の内容だったので、再度の激走に期待したい」と本命に。対抗ロブチェンは「無駄のない立ち回りでコース適性も合い、力のいる馬場で勝ち切れている」と評価し的中させた。" },
+    { "id": "tetsuya", "name": "鉄矢の競馬予想", "url": "https://www.keiba-jiku2.net/satsuki-sho-2026-yosou/", "badge": "blog", "label": "個人ブログ",
+      "honmei": [{ "num": 15, "name": "リアライズシリウス" }], "taikou": [{ "num": 17, "name": "アドマイヤクワッズ" }], "ana": [{ "num": 18, "name": "バステール" }],
+      "reason": "「先行力と持続力がこの舞台で最も生きそう」と共同通信杯を決定的に制した内容を評価。2着で的中させた。" },
+    { "id": "concierge-tsuda", "name": "津田TM（競馬コンシェルジュ）", "url": "https://entameboy.com/umanchu-2026-04-19/", "badge": "cmp", "label": "予想印まとめ",
+      "honmei": [{ "num": 12, "name": "グリーンエンジー" }], "taikou": [{ "num": 4, "name": "ロブチェン" }], "ana": [{ "num": 16, "name": "アルトラムス" }],
+      "reason": "「今年の共同通信杯のレースレベルはかなり高かった」と評価し、対抗ロブチェンで的中させた。" },
+    { "id": "umanchu-asagoe", "name": "うまんちゅ企画・浅越ゴエ", "url": "https://entameboy.com/umanchu-2026-04-19/", "badge": "ent", "label": "芸能人企画",
+      "honmei": [{ "num": 4, "name": "ロブチェン" }], "taikou": [], "ana": [],
+      "reason": "「同舞台のG1ホープフルSを勝っている」ことを信頼の根拠に本命指名し、的中させた。" },
+    { "id": "umanchu-oniichan", "name": "うまんちゅ企画・ビタミンSお兄ちゃん", "url": "https://entameboy.com/umanchu-2026-04-19/", "badge": "ent", "label": "芸能人企画",
+      "honmei": [{ "num": 5, "name": "アスクエジンバラ" }], "taikou": [], "ana": [],
+      "reason": "様々なコース・脚質での経験の豊富さを評価した。" },
+    { "id": "umanchu-iwabe", "name": "うまんちゅ企画・ミサイルマン岩部", "url": "https://entameboy.com/umanchu-2026-04-19/", "badge": "ent", "label": "芸能人企画",
+      "honmei": [{ "num": 14, "name": "ゾロアストロ" }], "taikou": [], "ana": [],
+      "reason": "「エンジンがかかれば一級品のパワー」を評価した。" },
+    { "id": "umanchu-nishidai", "name": "うまんちゅ企画・ミサイルマン西代", "url": "https://entameboy.com/umanchu-2026-04-19/", "badge": "ent", "label": "芸能人企画",
+      "honmei": [{ "num": 12, "name": "グリーンエンジー" }], "taikou": [], "ana": [],
+      "reason": "" },
+    { "id": "umanchu-koisan", "name": "うまんちゅ企画・シャンプーハット恋さん", "url": "https://entameboy.com/umanchu-2026-04-19/", "badge": "ent", "label": "芸能人企画",
+      "honmei": [{ "num": 8, "name": "マテンロウゲイル" }], "taikou": [], "ana": [],
+      "reason": "2000mで4戦2勝、格上相手にも渡り合った内容を評価した。" },
+    { "id": "umanchu-tetsuji", "name": "うまんちゅ企画・シャンプーハットてつじ", "url": "https://entameboy.com/umanchu-2026-04-19/", "badge": "ent", "label": "芸能人企画",
+      "honmei": [{ "num": 15, "name": "リアライズシリウス" }], "taikou": [], "ana": [],
+      "reason": "先手を奪い有利な展開を作れると期待し2着で的中させた。" },
+    { "id": "umanchu-gallop", "name": "うまんちゅ予想・ギャロップ林", "url": "https://entameboy.com/umanchu-2026-04-19/", "badge": "ent", "label": "芸能人企画",
+      "honmei": [{ "num": 16, "name": "アルトラムス" }], "taikou": [], "ana": [],
+      "reason": "" }
+  ]
+}
