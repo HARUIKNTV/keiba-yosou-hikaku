@@ -43,7 +43,7 @@
     { "id": "umanchu-tetsuji", "name": "うまんちゅ企画・シャンプーハットてつじ", "url": "https://entameboy.com/umanchu-2026-06-28/", "badge": "ent", "label": "芸能人企画",
       "honmei": [{ "num": 3, "name": "ピースワンデュック" }], "taikou": [], "ana": [],
       "reason": "地力の高さを評価して本命に指名し、3着で的中させた。" },
-    { "id": "umanchu-hayashi", "name": "うまんちゅ企画・ギャロップ林", "url": "https://entameboy.com/umanchu-2026-06-28/", "badge": "ent", "label": "芸能人企画",
+    { "id": "umanchu-gallop", "name": "うまんちゅ予想・ギャロップ林", "url": "https://entameboy.com/umanchu-2026-06-28/", "badge": "ent", "label": "芸能人企画",
       "honmei": [{ "num": 12, "name": "エコロディノス" }], "taikou": [], "ana": [],
       "reason": "洋芝血統背景を評価して本命としたが9着までだった。" }
   ]
