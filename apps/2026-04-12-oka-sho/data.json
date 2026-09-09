@@ -1,0 +1,53 @@
+{
+  "slug": "2026-04-12-oka-sho",
+  "name": "桜花賞",
+  "grade": "G1",
+  "venue": "阪神競馬場 芝1600m",
+  "venueShort": "阪神・芝1600m",
+  "date": "2026-04-12",
+  "extraFacts": ["阪神JFに続くG1連勝", "松山弘平騎手"],
+  "result": [
+    { "rank": 1, "num": 15, "name": "スターアニス", "meta": "1番人気・松山弘平騎手・阪神JFに続くG1連勝" },
+    { "rank": 2, "num": 5, "name": "ギャラボーグ", "meta": "5番人気" },
+    { "rank": 3, "num": 11, "name": "ジッピーチューン", "meta": "12番人気" }
+  ],
+  "summary": [
+    "◎(本命)が最も集まったのは<b>⑮スターアニス(2票)・⑭ドリームコア(2票)・⑰ブラックチャリス(2票)</b>と評価が分かれる中、優勝したのは阪神JFを完勝していた<b>⑮スターアニス</b>。うましる・鉄矢の競馬予想が本命指名で的中させています。",
+    "3着⑪ジッピーチューンは12番人気の大穴で、10予想元の中で誰もマークしていない完全な伏兵でした。2着⑤ギャラボーグは「うまんちゅ企画・ミサイルマン西代」が単独で本命指名し的中させています。"
+  ],
+  "tallyNote": "◎3点・○2点・▲穴1点で集計。実際の勝ち馬（⑮スターアニス）はうましる・鉄矢の本命2票に加えアンカツの対抗評価も集め、堅実な支持を得ていました。",
+  "sourceCount": 10,
+  "sourceCountNote": "10予想元",
+  "sources": [
+    { "id": "umashiru", "name": "うましる", "url": "https://umasiru.com/archives/19396", "badge": "blog", "label": "個人ブログ",
+      "honmei": [{ "num": 15, "name": "スターアニス" }], "taikou": [{ "num": 14, "name": "ドリームコア" }], "ana": [{ "num": 13, "name": "リリージョワ" }, { "num": 7, "name": "アランカール" }, { "num": 5, "name": "ギャラボーグ" }],
+      "reason": "前走阪神JF（G1）を1分32秒6の好時計で勝利し、初マイルでも力強い走りを証明した点を評価し的中させた。" },
+    { "id": "tetsuya", "name": "鉄矢の競馬予想", "url": "https://www.keiba-jiku2.net/oka-sho-2026-yosou/", "badge": "blog", "label": "個人ブログ",
+      "honmei": [{ "num": 15, "name": "スターアニス" }], "taikou": [{ "num": 7, "name": "アランカール" }], "ana": [{ "num": 10, "name": "ナムラコスモス" }],
+      "reason": "「阪神JFを同舞台で完勝している実績は最上位。直行ローテでも最終追いでは自己ベスト級の時計」と評価し的中させた。" },
+    { "id": "andokatsumi", "name": "アンカツ（安藤勝己）", "url": "https://entameboy.com/umanchu-2026-04-12/", "badge": "ent", "label": "芸能人企画",
+      "honmei": [{ "num": 14, "name": "ドリームコア" }], "taikou": [{ "num": 15, "name": "スターアニス" }], "ana": [{ "num": 7, "name": "アランカール" }],
+      "reason": "「G1でルメールが乗ってくるのが魅力」とドリームコアを本命に。スターアニスは「スプリント色が濃いタイプ」としつつも対抗評価で的中させた。" },
+    { "id": "umanchu-asagoe", "name": "うまんちゅ企画・浅越ゴエ", "url": "https://entameboy.com/umanchu-2026-04-12/", "badge": "ent", "label": "芸能人企画",
+      "honmei": [{ "num": 14, "name": "ドリームコア" }], "taikou": [], "ana": [],
+      "reason": "「前走クイーンCを1分32秒6の好時計で勝っており、ここでも期待できる」と評価した。" },
+    { "id": "umanchu-oniichan", "name": "うまんちゅ企画・ビタミンSお兄ちゃん", "url": "https://entameboy.com/umanchu-2026-04-12/", "badge": "ent", "label": "芸能人企画",
+      "honmei": [{ "num": 17, "name": "ブラックチャリス" }], "taikou": [], "ana": [],
+      "reason": "「この馬が走ってきた4戦全て強い内容！重賞は勝ったが今回も人気はしなさそう」と評価した。" },
+    { "id": "umanchu-iwabe", "name": "うまんちゅ企画・ミサイルマン岩部", "url": "https://entameboy.com/umanchu-2026-04-12/", "badge": "ent", "label": "芸能人企画",
+      "honmei": [{ "num": 10, "name": "ナムラコスモス" }], "taikou": [], "ana": [],
+      "reason": "「スタミナ勝負に持ち込めれば馬券圏内はある」と評価した。" },
+    { "id": "umanchu-nishidai", "name": "うまんちゅ企画・ミサイルマン西代", "url": "https://entameboy.com/umanchu-2026-04-12/", "badge": "ent", "label": "芸能人企画",
+      "honmei": [{ "num": 5, "name": "ギャラボーグ" }], "taikou": [], "ana": [],
+      "reason": "「阪神JFの2着馬で、阪神では連対を外していない」と評価し2着で的中させた。" },
+    { "id": "umanchu-koisan", "name": "うまんちゅ企画・シャンプーハット恋さん", "url": "https://entameboy.com/umanchu-2026-04-12/", "badge": "ent", "label": "芸能人企画",
+      "honmei": [{ "num": 3, "name": "ディアダイヤモンド" }], "taikou": [], "ana": [],
+      "reason": "「前走のアネモネSは先行して3馬身差の快勝！タイムも優秀」と評価した。" },
+    { "id": "umanchu-tetsuji", "name": "うまんちゅ企画・シャンプーハットてつじ", "url": "https://entameboy.com/umanchu-2026-04-12/", "badge": "ent", "label": "芸能人企画",
+      "honmei": [{ "num": 17, "name": "ブラックチャリス" }], "taikou": [], "ana": [],
+      "reason": "「桜花賞を獲るためだけのローテで来た！この馬の成長力に懸ける」と評価した。" },
+    { "id": "umanchu-gallop", "name": "うまんちゅ予想・ギャロップ林", "url": "https://entameboy.com/umanchu-2026-04-12/", "badge": "ent", "label": "芸能人企画",
+      "honmei": [{ "num": 12, "name": "スウィートハピネス" }], "taikou": [], "ana": [],
+      "reason": "「阪神JFでは勝ち馬と0.3秒差の4着と、そんなに差がないのにこのオッズはおいしい」と評価した。" }
+  ]
+}
