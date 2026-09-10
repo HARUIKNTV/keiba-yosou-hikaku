@@ -6,7 +6,10 @@ const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, "manifest.json"), "u
 
 const SITE_NAME = "競馬分析";
 const SITE_URL = "https://haruikntv.github.io/keiba-yosou-hikaku/";
-const ADSENSE_TAG = '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7523687500134096" crossorigin="anonymous"></script>';
+const ADSENSE_CLIENT = "ca-pub-7523687500134096";
+const ADSENSE_TAG = `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}" crossorigin="anonymous"></script>
+<script>(adsbygoogle = window.adsbygoogle || []).push({google_ad_client: "${ADSENSE_CLIENT}", enable_page_level_ads: true});</script>`;
+const BUILD_DATE = new Date().toISOString().slice(0, 10);
 
 function escapeHtml(s) {
   return String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({
@@ -29,13 +32,6 @@ const races = manifest.races.map((folder) => {
 races.sort((a, b) => (a.data.date < b.data.date ? 1 : -1)); // newest first
 
 // ---- shared render helpers (used for both the index accordion and each standalone page) ----
-function adSlot(sizeLabel, extraClass) {
-  return `<div class="ad-slot ${extraClass || ""}">
-    <div class="ad-slot-inner"><span class="ad-slot-label">広告スペース</span><span class="ad-slot-size">${sizeLabel}</span></div>
-    <!-- AdSense/other ad network snippet goes here. See README.md "広告の設置について". -->
-  </div>`;
-}
-
 function fmtHorse(h) {
   return h.num ? `<span class="mark">${h.num}</span> ${escapeHtml(h.name)}` : escapeHtml(h.name);
 }
@@ -156,7 +152,6 @@ function renderRaceBody(data) {
     ${renderPodium(data.result)}
     ${renderCallout(data.summary)}
     ${renderTally(data)}
-    ${adSlot("300 x 250", "ad-rect")}
     ${renderPredCards(data)}
   `;
 }
@@ -329,19 +324,10 @@ const SHARED_CSS = `
   a{ color:inherit; }
   .wrap{ max-width:960px; margin:0 auto; padding:0 20px 70px; }
 
-  .ad-slot{
-    display:flex; align-items:center; justify-content:center;
-    background:repeating-linear-gradient(45deg, var(--accent-soft), var(--accent-soft) 10px, var(--paper) 10px, var(--paper) 20px);
-    border:2px dashed var(--rule-strong); border-radius:8px; color:var(--muted);
-    margin:18px auto; max-width:960px;
-  }
-  .ad-slot-inner{ text-align:center; }
-  .ad-slot-label{ display:block; font-size:12px; letter-spacing:.1em; }
-  .ad-slot-size{ display:block; font-size:10.5px; opacity:.75; }
-  .ad-banner{ max-width:728px; height:90px; }
-  .ad-rect{ max-width:300px; height:250px; }
-
   header.masthead{ max-width:960px; margin:0 auto; padding:20px 20px 0; }
+  .breadcrumb{ font-size:11.5px; color:var(--muted); margin-bottom:6px; }
+  .breadcrumb a{ color:var(--muted); text-decoration:underline; }
+  .breadcrumb [aria-current]{ color:var(--ink); font-weight:600; }
   .kicker{
     font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.1em;
     color:var(--muted); text-transform:uppercase;
@@ -575,8 +561,10 @@ const indexHtml = `<!doctype html>
 ${ADSENSE_TAG}
 <title>${SITE_NAME}｜レース結果と予想データの検証サイト</title>
 <meta name="description" content="${escapeHtml(description)}" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
 <link rel="canonical" href="${SITE_URL}" />
 <meta property="og:type" content="website" />
+<meta property="og:locale" content="ja_JP" />
 <meta property="og:site_name" content="${SITE_NAME}" />
 <meta property="og:title" content="${SITE_NAME}" />
 <meta property="og:description" content="${escapeHtml(description)}" />
@@ -587,33 +575,46 @@ ${ADSENSE_TAG}
 <meta name="twitter:description" content="${escapeHtml(description)}" />
 <meta name="twitter:image" content="${SITE_URL}og-image.svg" />
 <script type="application/ld+json">
-${JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  name: SITE_NAME,
-  description,
-  url: SITE_URL,
-  mainEntity: {
-    "@type": "ItemList",
-    itemListElement: races.map((r, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      item: {
-        "@type": "Article",
-        name: `${r.data.name}${r.data.date.slice(0, 4)} 全予想比較`,
-        description: (r.data.summary[0] || "").replace(/<[^>]+>/g, ""),
-        url: SITE_URL + path.basename(r.folder) + "/",
-      },
-    })),
+${JSON.stringify([
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: SITE_NAME,
+    url: SITE_URL,
+    description,
+    inLanguage: "ja",
+    publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL, logo: { "@type": "ImageObject", url: `${SITE_URL}og-image.svg` } },
   },
-}, null, 2)}
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: SITE_NAME,
+    description,
+    url: SITE_URL,
+    inLanguage: "ja",
+    dateModified: BUILD_DATE,
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: races.length,
+      itemListElement: races.map((r, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        item: {
+          "@type": "Article",
+          name: `${r.data.name}${r.data.date.slice(0, 4)} 全予想比較`,
+          description: (r.data.summary[0] || "").replace(/<[^>]+>/g, ""),
+          datePublished: r.data.date,
+          url: SITE_URL + path.basename(r.folder) + "/",
+        },
+      })),
+    },
+  },
+])}
 </script>
 ${FONT_LINK}
 <style>${SHARED_CSS}</style>
 </head>
 <body>
-
-${adSlot("728 x 90", "ad-banner")}
 
 <header class="masthead">
   <div class="kicker">
@@ -662,13 +663,9 @@ ${adSlot("728 x 90", "ad-banner")}
   </section>
 </header>
 
-${adSlot("728 x 90", "ad-banner")}
-
 <div class="wrap">
   ${rankingHtml}
 </div>
-
-${adSlot("728 x 90", "ad-banner")}
 
 <div class="wrap">
   <footer>
@@ -734,42 +731,78 @@ races.forEach((r) => {
   const slug = path.basename(r.folder);
   const raceUrl = `${SITE_URL}${slug}/`;
   const desc = (data.summary[0] || "").replace(/<[^>]+>/g, "");
+  const pageTitle = `${data.name}${data.date.slice(0, 4)} 全予想比較`;
+  const ogImageUrl = `${SITE_URL}og-image.svg`;
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: SITE_NAME, item: SITE_URL },
+        { "@type": "ListItem", position: 2, name: pageTitle, item: raceUrl },
+      ],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: pageTitle,
+      description: desc,
+      url: raceUrl,
+      mainEntityOfPage: { "@type": "WebPage", "@id": raceUrl },
+      image: [ogImageUrl],
+      datePublished: data.date,
+      dateModified: BUILD_DATE,
+      inLanguage: "ja",
+      author: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+      publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL, logo: { "@type": "ImageObject", url: ogImageUrl } },
+      about: {
+        "@type": "SportsEvent",
+        name: data.name,
+        startDate: data.date,
+        location: { "@type": "Place", name: data.venue },
+        sport: "Horse racing",
+      },
+    },
+  ];
   const page = `<!doctype html>
 <html lang="ja">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
 ${ADSENSE_TAG}
-<title>${escapeHtml(data.name)}${data.date.slice(0, 4)} 全予想比較｜${SITE_NAME}</title>
+<title>${escapeHtml(pageTitle)}｜${SITE_NAME}</title>
 <meta name="description" content="${escapeHtml(desc)}" />
 <link rel="canonical" href="${raceUrl}" />
 <meta property="og:type" content="article" />
+<meta property="og:locale" content="ja_JP" />
 <meta property="og:site_name" content="${SITE_NAME}" />
-<meta property="og:title" content="${escapeHtml(data.name)}${data.date.slice(0, 4)} 全予想比較" />
+<meta property="og:title" content="${escapeHtml(pageTitle)}" />
 <meta property="og:description" content="${escapeHtml(desc)}" />
 <meta property="og:url" content="${raceUrl}" />
-<meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="${escapeHtml(data.name)}${data.date.slice(0, 4)} 全予想比較" />
+<meta property="og:image" content="${ogImageUrl}" />
+<meta property="article:published_time" content="${data.date}" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="${escapeHtml(pageTitle)}" />
 <meta name="twitter:description" content="${escapeHtml(desc)}" />
+<meta name="twitter:image" content="${ogImageUrl}" />
+<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>
 ${FONT_LINK}
 <style>${SHARED_CSS}</style>
 </head>
 <body>
 
-${adSlot("728 x 90", "ad-banner")}
-
 <header class="masthead">
+  <nav class="breadcrumb" aria-label="breadcrumb"><a href="../">${SITE_NAME}</a><span aria-hidden="true"> › </span><span aria-current="page">${escapeHtml(data.name)}</span></nav>
   <div class="kicker">
     <span><a href="../">${SITE_NAME}</a> / KEIBA BUNSEKI</span>
     <span>${data.sourceCountNote}</span>
   </div>
-  <h1 class="title">${escapeHtml(data.name)}${data.date.slice(0, 4)} 全予想比較</h1>
+  <h1 class="title">${escapeHtml(pageTitle)}</h1>
   <p class="subtitle">${data.sourceCountNote}が公開していた◎○▲と根拠を、実際の結果とあわせて検証</p>
   <div class="rule-3"></div>
   ${renderRaceBody(data)}
 </header>
-
-${adSlot("728 x 90", "ad-banner")}
 
 <div class="wrap">
   <footer>
@@ -787,11 +820,48 @@ ${adSlot("728 x 90", "ad-banner")}
 });
 
 // ---- sitemap.xml ----
-const urls = [SITE_URL, ...races.map((r) => `${SITE_URL}${path.basename(r.folder)}/`)];
+const sitemapEntries = [
+  { loc: SITE_URL, lastmod: BUILD_DATE, priority: "1.0" },
+  ...races.map((r) => ({ loc: `${SITE_URL}${path.basename(r.folder)}/`, lastmod: r.data.date, priority: "0.8" })),
+];
 fs.writeFileSync(
   path.join(siteDir, "sitemap.xml"),
-  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${u}</loc></url>`).join("\n")}\n</urlset>\n`
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapEntries
+    .map((e) => `  <url><loc>${e.loc}</loc><lastmod>${e.lastmod}</lastmod><priority>${e.priority}</priority></url>`)
+    .join("\n")}\n</urlset>\n`
 );
+
+// ---- robots.txt ----
+// Explicitly allow the mainstream search crawlers plus the AI-answer crawlers
+// (SGE/AI Overviews, ChatGPT, Perplexity, Claude, Common Crawl) so the site
+// is eligible to be cited in AI-generated answers as well as classic search.
+const robotsTxt = `User-agent: *
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: ${SITE_URL}sitemap.xml
+`;
+fs.writeFileSync(path.join(siteDir, "robots.txt"), robotsTxt);
 
 // ---- llms.txt ----
 const llmsTxt = `# ${SITE_NAME}
@@ -806,4 +876,4 @@ fs.writeFileSync(path.join(siteDir, "llms.txt"), llmsTxt);
 // ---- static OG image asset ----
 fs.copyFileSync(path.join(ROOT, "assets", "og-image.svg"), path.join(siteDir, "og-image.svg"));
 
-console.log(`Generated index.html + ${races.length} race page(s), sitemap.xml, llms.txt.`);
+console.log(`Generated index.html + ${races.length} race page(s), sitemap.xml, robots.txt, llms.txt.`);

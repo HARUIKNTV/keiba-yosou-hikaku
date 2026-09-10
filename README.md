@@ -15,7 +15,7 @@ JRAの重賞レースについて、**終わったレースの結果**と、AI�
 - `manifest.json` — 公開する順番を決める`races`配列（各レースのフォルダパスのみ）。データの実体は持たない。
 - `apps/<date>-<race-slug>/data.json` — レースごとのデータ（レース情報・結果・総括・予想元ごとの◎○▲と根拠）。**これが唯一のデータソース**で、HTMLは持たない。各`sources[]`要素の`id`は、同じ予想元が複数レースにまたがって出てくるときに成績ランキングで名寄せするためのキー（`name`は記事タイトルの都合で表記が揺れることがあるが、`id`は固定する）。
 - `assets/og-image.svg` — サイト共通のOGP/Twitter Card画像。
-- `scripts/generate-index.js` — `manifest.json`と各`data.json`から、`site/index.html`（レース一覧＋成績ランキング）、`site/<race-slug>/index.html`（レースごとの詳細ページ）、`site/sitemap.xml`、`site/llms.txt`を丸ごと自動生成する。HTMLのテンプレートはこのファイル1つに集約されている。CIで毎回実行される。
+- `scripts/generate-index.js` — `manifest.json`と各`data.json`から、`site/index.html`（レース一覧＋成績ランキング）、`site/<race-slug>/index.html`（レースごとの詳細ページ、JSON-LD構造化データ・パンくず付き）、`site/sitemap.xml`（lastmod付き）、`site/robots.txt`（検索クローラー＋AI回答クローラーを許可）、`site/llms.txt`を丸ごと自動生成する。HTMLのテンプレートはこのファイル1つに集約されている。CIで毎回実行される。
 - `.github/workflows/deploy-pages.yml` — `node scripts/generate-index.js`を実行して`site/`をGitHub Pagesにデプロイするだけ。
 
 ## 集計の仕組み
@@ -32,9 +32,9 @@ JRAの重賞レースについて、**終わったレースの結果**と、AI�
 
 ## 広告の設置について
 
-一覧ページ（`generate-index.js`が生成、ヘッダー直下とフッター上の728×90）と、各比較ページ（ヘッダー直下728×90、集計チャートと印一覧の間300×250、フッター上728×90）の両方に空の広告枠（`.ad-slot`）を用意している。
+このリポジトリと[HARUIKNTVの他プロジェクト](https://github.com/HARUIKNTV/haruikntv.github.io)は同じGoogle AdSenseアカウント（`ca-pub-7523687500134096`、`haruikntv.github.io`ドメインで`ads.txt`により認証済み）を使う。全ページの`<head>`にAdSenseのローダースクリプトと、Auto ads（`enable_page_level_ads: true`）を有効化するスニペットを設置済み（`scripts/generate-index.js`の`ADSENSE_TAG`）。Auto adsは記事内・記事間・アンカー広告などをGoogle側が自動でページに挿入する方式で、手動の広告ユニット（`data-ad-slot`）を個別に用意する必要がない。
 
-このリポジトリと[HARUIKNTVの他プロジェクト](https://github.com/HARUIKNTV/haruikntv.github.io)は同じGoogle AdSenseアカウント（`ca-pub-7523687500134096`、`haruikntv.github.io`ドメインで`ads.txt`により認証済み）を使う想定で、各ページの`<head>`にはすでにAdSenseのスクリプトタグを設置済み。実際の広告ユニットを表示するには、`.ad-slot`のプレースホルダーを本物の`<ins class="adsbygoogle">`タグに置き換える（`scripts/generate-index.js`の`adSlot()`関数、および各比較ページの同等コメント箇所）。
+**残っている手動設定（AdSense管理画面で1回だけ）:** 「広告」→「サイト別」で`haruikntv.github.io`のAuto adsがONになっていることを確認する（未確認・未承認の場合は広告が表示されない）。特定の位置に固定の広告ユニットを追加したい場合は、AdSense管理画面で広告ユニットを作成して得られる`data-ad-slot`値を使い、`scripts/generate-index.js`のテンプレート内に`<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7523687500134096" data-ad-slot="（取得したslot ID）" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>`を追加する。
 
 ## 免責事項
 
