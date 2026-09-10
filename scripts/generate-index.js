@@ -161,11 +161,18 @@ function resultCompactLine(result) {
   return result.map((r) => `${rankLabel[r.rank] || r.rank + "着"} ${r.num ? r.num + " " : ""}${escapeHtml(r.name)}`).join("　／　");
 }
 
+// G1/G2/G3 each get a dedicated accent color; any other JRA class (L, OP,
+// 3勝クラス, etc.) shares one neutral "other" style so new grade strings
+// never render unstyled.
+function gradeClass(grade) {
+  return ["G1", "G2", "G3"].includes(grade) ? grade.toLowerCase() : "other";
+}
+
 function renderRaceLinkRow(data, folder) {
   const slug = path.basename(folder);
   const searchKey = escapeHtml(`${data.name}${data.venueShort}${data.grade}`.toLowerCase());
-  return `<a class="race-row grade-${data.grade.toLowerCase()}" href="./${slug}/" data-grade="${data.grade}" data-search="${searchKey}">
-    <span class="grade-badge ${data.grade.toLowerCase()}">${data.grade}</span>
+  return `<a class="race-row grade-${gradeClass(data.grade)}" href="./${slug}/" data-grade="${data.grade}" data-search="${searchKey}">
+    <span class="grade-badge ${gradeClass(data.grade)}">${escapeHtml(data.grade)}</span>
     <span class="row-name">${escapeHtml(data.name)}<span class="row-venue">${escapeHtml(data.venueShort)}</span></span>
     <span class="row-date">${dateLabel(data.date)}</span>
     <span class="row-result">${resultCompactLine(data.result)}</span>
@@ -276,8 +283,8 @@ const SHARED_CSS = `
     --badge-yt-bg:#FBE1DC; --badge-yt-ink:#C23B1E;
     --badge-ent-bg:#FDEBD2; --badge-ent-ink:#B0700B;
     --badge-cmp-bg:#DFE9FA; --badge-cmp-ink:#2159B0;
-    --g1-bg:#FBE1DC; --g1-ink:#C23B1E; --g2-bg:#DFE9FA; --g2-ink:#2159B0; --g3-bg:#F5E3EE; --g3-ink:#8A3A6B; --l-bg:#EAEAE5; --l-ink:#5C5C56;
-    --cat-g1:#D14B32; --cat-g1-soft:#FBE4DE; --cat-g2:#2E6FB0; --cat-g2-soft:#E1EBF7; --cat-g3:#9C4C7A; --cat-g3-soft:#F5E3EE; --cat-l:#6B6B63; --cat-all:#171717; --cat-all-soft:#ECECE9;
+    --g1-bg:#FBE1DC; --g1-ink:#C23B1E; --g2-bg:#DFE9FA; --g2-ink:#2159B0; --g3-bg:#F5E3EE; --g3-ink:#8A3A6B; --other-bg:#EAEAE5; --other-ink:#5C5C56;
+    --cat-g1:#D14B32; --cat-g1-soft:#FBE4DE; --cat-g2:#2E6FB0; --cat-g2-soft:#E1EBF7; --cat-g3:#9C4C7A; --cat-g3-soft:#F5E3EE; --cat-other:#6B6B63; --cat-all:#171717; --cat-all-soft:#ECECE9;
     --shadow:0 1px 2px rgba(23,23,23,.07), 0 3px 10px rgba(23,23,23,.06);
     --shadow-sm:0 1px 3px rgba(23,23,23,.09);
     --focus:#171717;
@@ -313,8 +320,8 @@ const SHARED_CSS = `
     --badge-yt-bg:#301C17; --badge-yt-ink:#EA8F71;
     --badge-ent-bg:#2E2410; --badge-ent-ink:#E5B85C;
     --badge-cmp-bg:#161F30; --badge-cmp-ink:#8FB4EE;
-    --g1-bg:#301C17; --g1-ink:#EA8F71; --g2-bg:#161F30; --g2-ink:#8FB4EE; --g3-bg:#301C29; --g3-ink:#E0A0C4; --l-bg:#2A2A26; --l-ink:#B8B8B0;
-    --cat-g1:#E37456; --cat-g1-soft:#2E1B15; --cat-g2:#6FA8E8; --cat-g2-soft:#131E2C; --cat-g3:#C06498; --cat-g3-soft:#301C29; --cat-l:#9A9A90; --cat-all:#F3F3F0; --cat-all-soft:#282824;
+    --g1-bg:#301C17; --g1-ink:#EA8F71; --g2-bg:#161F30; --g2-ink:#8FB4EE; --g3-bg:#301C29; --g3-ink:#E0A0C4; --other-bg:#2A2A26; --other-ink:#B8B8B0;
+    --cat-g1:#E37456; --cat-g1-soft:#2E1B15; --cat-g2:#6FA8E8; --cat-g2-soft:#131E2C; --cat-g3:#C06498; --cat-g3-soft:#301C29; --cat-other:#9A9A90; --cat-all:#F3F3F0; --cat-all-soft:#282824;
     --shadow:0 1px 2px rgba(0,0,0,.35), 0 3px 12px rgba(0,0,0,.3);
     --shadow-sm:0 1px 3px rgba(0,0,0,.35);
     --focus:#F3F3F0;
@@ -420,7 +427,7 @@ const SHARED_CSS = `
   a.race-row.grade-g1{ border-left-color:var(--cat-g1); }
   a.race-row.grade-g2{ border-left-color:var(--cat-g2); }
   a.race-row.grade-g3{ border-left-color:var(--cat-g3); }
-  a.race-row.grade-l{ border-left-color:var(--cat-l); }
+  a.race-row.grade-other{ border-left-color:var(--cat-other); }
   a.race-row:hover{ box-shadow:var(--shadow); transform:translateY(-1px); }
   a.race-row:focus-visible{ outline:2px solid var(--focus); outline-offset:2px; }
   .row-name{ font-weight:700; font-size:14.5px; }
@@ -433,7 +440,7 @@ const SHARED_CSS = `
   .grade-badge.g1{ background:var(--g1-bg); color:var(--g1-ink); }
   .grade-badge.g2{ background:var(--g2-bg); color:var(--g2-ink); }
   .grade-badge.g3{ background:var(--g3-bg); color:var(--g3-ink); }
-  .grade-badge.l{ background:var(--l-bg); color:var(--l-ink); }
+  .grade-badge.other{ background:var(--other-bg); color:var(--other-ink); }
 
   /* source ranking table (index page) */
   section.ranking{ margin:34px 0; }
