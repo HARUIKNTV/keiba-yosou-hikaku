@@ -1,0 +1,41 @@
+{
+  "slug": "2026-07-12-tanabata-sho",
+  "name": "七夕賞",
+  "grade": "G3",
+  "venue": "福島競馬場 芝2000m",
+  "venueShort": "福島・芝2000m",
+  "date": "2026-07-12",
+  "extraFacts": ["3連単22万円超の高配当"],
+  "result": [
+    { "rank": 1, "num": 11, "name": "アスクナイスショー", "meta": "" },
+    { "rank": 2, "num": 6, "name": "マイネルモーント", "meta": "" },
+    { "rank": 3, "num": 9, "name": "オニャンコポン", "meta": "" }
+  ],
+  "summary": [
+    "◎(本命)は鉄矢の競馬予想・須田鷹雄（競馬コンシェルジュ）がともに⑪アスクナイスショーを本命指名して的中させました。「うましる」も穴で挙げており、6予想元中3つが1着を的中させる好成績となりました。",
+    "2着⑥マイネルモーントは「うまんちゅ予想・辻三蔵」が対抗、小木茂光・支配人（競馬コンシェルジュ）が本命に指名しており、福島の小回りコースへの適性が的中の決め手でした。"
+  ],
+  "tallyNote": "◎3点・○2点・▲穴1点で集計。実際の勝ち馬（⑪アスクナイスショー）は◎2票・▲1票の計7点で、堅実な支持を集めていました。",
+  "sourceCount": 6,
+  "sourceCountNote": "6予想元",
+  "sources": [
+    { "id": "umashiru", "name": "うましる", "url": "https://umasiru.com/archives/20637", "badge": "blog", "label": "個人ブログ",
+      "honmei": [{ "num": 4, "name": "カラマティアノス" }], "taikou": [{ "num": 16, "name": "サヴォーナ" }], "ana": [{ "num": 11, "name": "アスクナイスショー" }, { "num": 6, "name": "マイネルモーント" }, { "num": 15, "name": "ヤマニンブークリエ" }],
+      "reason": "中山金杯勝利と中山記念2着の実績を評価したが着外に終わった。穴で挙げていた1着・2着馬をともに的中させた。" },
+    { "id": "tetsuya", "name": "鉄矢の競馬予想", "url": "https://www.keiba-jiku2.net/tanabata-sho-2026-yosou/", "badge": "blog", "label": "個人ブログ",
+      "honmei": [{ "num": 11, "name": "アスクナイスショー" }], "taikou": [{ "num": 4, "name": "カラマティアノス" }], "ana": [{ "num": 16, "name": "サヴォーナ" }],
+      "reason": "「福島での3戦1勝2着1回3着1回の安定実績」と55キロの軽ハンデを評価し的中させた。" },
+    { "id": "concierge-suda", "name": "須田鷹雄（競馬コンシェルジュ）", "url": "https://entameboy.com/concierge-2026-07-12/", "badge": "cmp", "label": "予想印まとめ",
+      "honmei": [{ "num": 11, "name": "アスクナイスショー" }], "taikou": [{ "num": 7, "name": "メリオレム" }], "ana": [{ "num": 2, "name": "コントラポスト" }],
+      "reason": "「降級廃止以降、良い馬券になってきたのは5歳馬」という傾向を根拠に的中させた。" },
+    { "id": "umanchu-tsuji", "name": "うまんちゅ予想・辻三蔵", "url": "https://entameboy.com/concierge-2026-07-12/", "badge": "cmp", "label": "予想印まとめ",
+      "honmei": [{ "num": 12, "name": "リカンバール" }], "taikou": [{ "num": 6, "name": "マイネルモーント" }], "ana": [{ "num": 15, "name": "ヤマニンブークリエ" }],
+      "reason": "夏の去勢手術明けからの状態回復と、ブリンカー効果による集中力向上を評価。対抗マイネルモーントで2着を的中させた。" },
+    { "id": "concierge-ogi", "name": "小木茂光・支配人（競馬コンシェルジュ）", "url": "https://entameboy.com/concierge-2026-07-12/", "badge": "cmp", "label": "予想印まとめ",
+      "honmei": [{ "num": 6, "name": "マイネルモーント" }], "taikou": [], "ana": [],
+      "reason": "2着で的中させた。" },
+    { "id": "concierge-morinaga", "name": "守永真彩・秘書（競馬コンシェルジュ）", "url": "https://entameboy.com/concierge-2026-07-12/", "badge": "cmp", "label": "予想印まとめ",
+      "honmei": [{ "num": 16, "name": "サヴォーナ" }], "taikou": [], "ana": [],
+      "reason": "" }
+  ]
+}
